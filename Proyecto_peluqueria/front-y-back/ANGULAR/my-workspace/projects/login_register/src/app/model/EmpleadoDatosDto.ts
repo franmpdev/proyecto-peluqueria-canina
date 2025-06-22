@@ -1,4 +1,3 @@
-
 export class EmpleadoDatosDto {
   dni: string;
   email: string;
@@ -7,7 +6,6 @@ export class EmpleadoDatosDto {
   apellido: string;
   especialidad: string;
   telefono: string;
-
   constructor(dni: string, email: string, password: string, nombre: string, apellido: string, especialidad: string, telefono: string) {
     this.dni = dni;
     this.email = email;

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RegisterService } from '../../service/register.service';
 import { ClienteDatosDto } from '../../model/ClienteDatosDto';
 import { RouterModule, Router } from '@angular/router';
-import { UserService } from '../../service/user.service';
 import { ClienteService } from '../../service/cliente.service';
 @Component({
   selector: 'app-register',
@@ -13,15 +12,12 @@ import { ClienteService } from '../../service/cliente.service';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-
   email: string = '';
   nombre: string = '';
   apellido: string = '';
   password: string = '';
   telefono: string = '';
-
   constructor(private registerService:RegisterService, private clienteService: ClienteService  ,private router: Router){}
-
   registrarCliente() {
     this.registerService.registerCliente(
       this.email,

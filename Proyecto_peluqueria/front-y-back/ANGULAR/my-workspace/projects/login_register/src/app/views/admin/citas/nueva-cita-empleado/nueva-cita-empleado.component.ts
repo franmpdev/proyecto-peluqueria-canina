@@ -6,7 +6,6 @@ import { EmpleadoService } from '../../../../service/empleado.service';
 import { EmpleadoDatosDto } from '../../../../model/EmpleadoDatosDto';
 import { CitaService } from '../../../../service/cita.service';
 import { CitaAltaEmpleadoDto } from '../../../../model/CitaAltaEmpleadoDto';
-
 @Component({
   selector: 'app-nueva-cita-empleado',
   templateUrl: './nueva-cita-empleado.component.html',
@@ -14,7 +13,6 @@ import { CitaAltaEmpleadoDto } from '../../../../model/CitaAltaEmpleadoDto';
   imports: [CommonModule, FormsModule]
 })
 export class NuevaCitaEmpleadoComponent {
-
   constructor(private empleadoService: EmpleadoService, private citaService: CitaService){}
   email_cliente: string = '';
   nombre_cliente: string = '';
@@ -26,12 +24,9 @@ export class NuevaCitaEmpleadoComponent {
   fecha: Date | null = null;
   hora: string = '';
   empleados: EmpleadoDatosDto[] = [];
-
   ngOnInit() {
     this.empleadoService.allEmpleados().subscribe(data => {
       this.empleados = data;
-      console.log('Empleados cargados:', this.empleados);
-
     });
   }
   onSubmit() {
@@ -47,13 +42,10 @@ export class NuevaCitaEmpleadoComponent {
       this.hora
     )
     // Aquí puedes enviar la cita al backend o hacer lo que necesites
-    console.log('Cita enviada:', citaDTO);
     this.citaService.crearCitaEmpleado(citaDTO).subscribe({
-      next: (cita) => {
-        console.log('Cita creada correctamente:', cita);
+      next: () => {
       },
-      error: (error) => {
-        console.error('Error al crear la cita:', error);
+      error: () => {
       }
     });
   }

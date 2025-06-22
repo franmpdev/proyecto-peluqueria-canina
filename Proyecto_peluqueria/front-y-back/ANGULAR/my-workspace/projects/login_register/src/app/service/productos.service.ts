@@ -3,15 +3,12 @@ import { Injectable } from '@angular/core';
 import { ProductoAltaDto } from '../model/ProductoAltaDto';
 import { Observable } from 'rxjs';
 import { ProductoDatosDto } from '../model/ProductoDatosDto';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosService {
 constructor(private http:HttpClient) { }
-
   url:string= 'http://localhost:3000/productos';
-
   allProduct():Observable<ProductoDatosDto[]>{
     return this.http.get<ProductoDatosDto[]>(`${this.url}/Productos`);
   }

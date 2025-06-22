@@ -9,13 +9,11 @@ form, div.form-container {
   background-color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 /* Títulos */
 h1 {
   text-align: center;
   color: #333;
 }
-
 /* Estilo para etiquetas y entradas */
 label {
   display: block;
@@ -23,7 +21,6 @@ label {
   font-weight: bold;
   color: #555;
 }
-
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -37,12 +34,10 @@ input[type="tel"] {
   box-sizing: border-box;
   transition: border-color 0.3s;
 }
-
 input:focus {
   border-color: #007BFF;
   outline: none;
 }
-
 /* Botón principal */
 .btn-submit {
   width: 100%;
@@ -55,11 +50,9 @@ input:focus {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .btn-submit:hover {
   background-color: #0056b3;
 }
-
 /* Botón secundario */
 button:not(.btn-submit) {
   margin-top: 10px;
@@ -70,7 +63,6 @@ button:not(.btn-submit) {
   font-size: 15px;
   text-decoration: underline;
 }
-
 p {
   text-align: center;
   color: #666;
@@ -79,7 +71,6 @@ p {
 .center-button {
   text-align: center;
 }
-
 .center-button button {
   display: inline-block;
   font-size: 15px;

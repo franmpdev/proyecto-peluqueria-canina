@@ -1,13 +1,11 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ProductoAltaDto } from '../../model/ProductoAltaDto';
-import { ProductoDatosDto } from '../../model/ProductoDatosDto';
-import { ProductosService } from '../../service/productos.service';
-import { CategoriaDatosDto } from '../../model/CategoriaDatosDto';
-import { CategoriaService } from '../../service/categoria.service';
-
-
+import { ProductoAltaDto } from '../../../model/ProductoAltaDto';
+import { ProductoDatosDto } from '../../../model/ProductoDatosDto';
+import { ProductosService } from '../../../service/productos.service';
+import { CategoriaDatosDto } from '../../../model/CategoriaDatosDto';
+import { CategoriaService } from '../../../service/categoria.service';
 @Component({
   selector: 'app-productos',
   imports: [FormsModule, CommonModule],
@@ -59,7 +57,6 @@ export class ProductosComponent {
         this.nuevodescripcion = null
         this.mensajeAlta = null
         }, 2000)
-
       }
     });
   }
@@ -72,7 +69,6 @@ export class ProductosComponent {
         }
       });
     }
-
   // Seleccionar un producto para modificar
   seleccionarProducto(producto: ProductoDatosDto) {
     this.productoSeleccionado = { ...producto };
@@ -80,34 +76,32 @@ export class ProductosComponent {
     this.precio = producto.precio;
     this.descripcion = producto.descripcion;
   }
-
   // Modificar el producto seleccionado
-modificarProducto() {
-  if (!this.productoSeleccionado) return;
-  const productoModificado = {
-    nombre: this.nombre,
-    descripcion: this.descripcion,
-    precio: this.precio,
-    id_categoria: this.categoriaID,
-    stock: this.nuevostock
-  };
-  this.productosService.modifyProducto(this.productoSeleccionado.id_producto, productoModificado).subscribe({
-    next: (data) => {
-      this.mensajeUpdate = data && data.message ? data.message : 'Producto modificado correctamente.';
-      setTimeout(()=>{
-        this.mostrarProductos();
-        this.mensajeUpdate = null;
-        this.productoSeleccionado = null;
-        this.nombre = null;
-        this.precio = null;
-        this.descripcion = null;
-        this.categoriaID = null;
-        this.nuevostock = null;
-      }, 2000)
-    }
-  });
-}
-
+  modificarProducto() {
+    if (!this.productoSeleccionado) return;
+    const productoModificado = {
+      nombre: this.nombre,
+      descripcion: this.descripcion,
+      precio: this.precio,
+      id_categoria: this.categoriaID,
+      stock: this.nuevostock
+    };
+    this.productosService.modifyProducto(this.productoSeleccionado.id_producto, productoModificado).subscribe({
+      next: (data) => {
+        this.mensajeUpdate = data && data.message ? data.message : 'Producto modificado correctamente.';
+        setTimeout(()=>{
+          this.mostrarProductos();
+          this.mensajeUpdate = null;
+          this.productoSeleccionado = null;
+          this.nombre = null;
+          this.precio = null;
+          this.descripcion = null;
+          this.categoriaID = null;
+          this.nuevostock = null;
+        }, 2000)
+      }
+    });
+  }
   // Eliminar un producto por su ID
   eliminarProducto(idEliminar: number) {
     if (!idEliminar) return;

@@ -4,7 +4,7 @@ import { CitaService } from '../../../../service/cita.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MascotaService } from '../../../../service/mascota.service';
-import { MascotaDatosDto } from '../../../../model/MascotaDatosDto';
+import { MascotaDatosDto } from '../../../../model/mascotaDatosDto';
 import { EmpleadoService } from '../../../../service/empleado.service';
 import { EmpleadoDatosDto } from '../../../../model/EmpleadoDatosDto';
 @Component({
@@ -46,7 +46,6 @@ export class NuevaCitaClienteComponent {
     );
     citaDto.nombre_cliente = this.nombre_cliente;
     citaDto.telefono_cliente = this.telefono_cliente;
-
     this.citaService.crearCitaCliente(citaDto).subscribe({
       next: (respuesta) => {
         // Aquí puedes limpiar el formulario o mostrar un mensaje de éxito

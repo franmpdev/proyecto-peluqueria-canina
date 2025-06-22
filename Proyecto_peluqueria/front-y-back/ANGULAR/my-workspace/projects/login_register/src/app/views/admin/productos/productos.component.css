@@ -76,11 +76,9 @@ li {
   justify-content: space-between;
 }
 /* Agrega este CSS a tu archivo de estilos global o al componente para mejorar la sección de eliminar producto */
-
 .section h2 {
   color: #b80000;
 }
-
 .section form button[type="submit"] {
   background: #b80000;
   color: #fff;
@@ -92,16 +90,13 @@ li {
   transition: background 0.2s;
   margin-top: 6px;
 }
-
 .section form button[type="submit"]:hover {
   background: #7c0000;
 }
-
 .section form input[type="number"]#eliminarId {
   border: 1px solid #ffb3b3;
   background: #fff0f0;
 }
-
 .section form input[type="number"]#eliminarId:focus {
   border-color: #b80000;
 }

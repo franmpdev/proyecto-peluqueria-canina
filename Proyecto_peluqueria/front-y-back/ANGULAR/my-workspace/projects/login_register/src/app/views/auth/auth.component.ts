@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 @Component({
   selector: 'app-auth',
   imports: [RouterModule],
@@ -8,5 +7,4 @@ import { RouterModule } from '@angular/router';
   styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-
 }

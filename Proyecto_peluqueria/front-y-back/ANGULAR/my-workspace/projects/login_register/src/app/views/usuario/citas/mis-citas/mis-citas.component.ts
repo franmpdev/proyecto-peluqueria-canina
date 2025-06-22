@@ -22,9 +22,7 @@ export class MisCitasComponent  {
         this.empleadoService.getEmpleadoPorDni(cita.dni_empleado).subscribe(empleado => {
           cita.nombre_empleado = empleado.nombre;
           cita.apellido_empleado = empleado.apellido;
-          console.log('Empleado encontrado:', empleado);
         }, error => {
-          console.error('Error al obtener el empleado:', error);
         });
       });
     });
@@ -36,7 +34,6 @@ export class MisCitasComponent  {
         this.citas = this.citas.filter(c => c.id_cita !== id);
       },
       error: (error) => {
-        console.error('Error al eliminar la cita:', error);
       }
     });
   }

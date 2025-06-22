@@ -13,7 +13,7 @@ import { NuevoEmpleadoComponent } from './views/admin/empleados/nuevo-empleado/n
 import { MascotasComponent } from './views/admin/mascotas/mascotas.component';
 import { NuevaCitaClienteComponent } from './views/usuario/citas/nueva-cita-cliente/nueva-cita-cliente.component';
 import { MisCitasComponent } from './views/usuario/citas/mis-citas/mis-citas.component';
-import { ProductosComponent } from './components/productos/productos.component';
+import { ProductosComponent } from './views/admin/productos/productos.component';
 
 export const routes: Routes = [
   {

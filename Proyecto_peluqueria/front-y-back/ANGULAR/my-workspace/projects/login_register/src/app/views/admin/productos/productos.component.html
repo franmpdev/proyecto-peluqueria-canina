@@ -31,11 +31,8 @@
       <button type="submit">Crear</button>
       <span *ngIf="mensajeAlta" style="font-weight: bold; color:green">{{mensajeAlta}}</span>
     </form>
-
   </div>
-
   <hr>
-
   <!-- Mostrar Productos -->
   <div class="section">
     <h2>Lista de Productos</h2>
@@ -51,9 +48,7 @@
       <em>No hay productos registrados.</em>
     </div>
   </div>
-
   <hr>
-
   <!-- Modificar Producto -->
   <div class="section" *ngIf="productoSeleccionado">
     <h2>Modificar Producto</h2>
@@ -87,9 +82,7 @@
       <span *ngIf="mensajeUpdate" style="font-weight: bold; color:yellow">{{mensajeUpdate}}</span>
     </form>
   </div>
-
   <hr>
-
   <!-- Eliminar Producto -->
   <div class="section">
     <h2>Eliminar Producto</h2>

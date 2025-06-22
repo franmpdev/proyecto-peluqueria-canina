@@ -3,18 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EmpleadoAltaDto } from '../model/EmpeladoAltaDto';
-import { ClienteDatosDto } from '../model/ClienteDatosDto';
-import { UserDatosDto } from '../model/UserDatosDto';
-
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoService {
-
   constructor(private http:HttpClient) { }
   empleado: EmpleadoDatosDto | null = null;
   url:string= 'http://localhost:3000/empleados';
-
   allEmpleados():Observable<EmpleadoDatosDto[]>{
     return this.http.get<EmpleadoDatosDto[]>(this.url);
   }
@@ -36,11 +31,9 @@ export class EmpleadoService {
   getEmpleadoPorDni(dni: string): Observable<EmpleadoDatosDto> {
     return this.http.get<EmpleadoDatosDto>(`${this.url}/findEmpleadoByDni/${dni}`);
   }
-
   setEmpleado(empleado: EmpleadoDatosDto): void {
     this.empleado = empleado;
   }
-
   getEmpleado(): EmpleadoDatosDto | null {
     if(!this.empleado){
       return null;
@@ -54,5 +47,4 @@ export class EmpleadoService {
   removeEmpleado():void{
     this.empleado = null;
   }
-
 }

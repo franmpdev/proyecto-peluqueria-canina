@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MascotaService } from '../../../../service/mascota.service';
-import { MascotaDatosDto } from '../../../../model/MascotaDatosDto';
+import { MascotaDatosDto } from '../../../../model/mascotaDatosDto';
 import { MascotaAltaDto } from '../../../../model/MascotaAltaDto';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

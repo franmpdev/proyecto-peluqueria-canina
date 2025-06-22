@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MascotaDatosDto } from '../../../../../model/MascotaDatosDto';
+import { MascotaDatosDto } from '../../../../../model/mascotaDatosDto';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mascota',
