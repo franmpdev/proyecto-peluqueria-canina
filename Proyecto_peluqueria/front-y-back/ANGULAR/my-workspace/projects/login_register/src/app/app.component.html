@@ -10,7 +10,6 @@
         <button *ngIf="isLoggedIn()" (click)="logout()" style="color:red;" class="mat-menu-item" mat-menu-item>Cierra sesión</button>
       </mat-menu>
   </div>
-
   <!-- Menú Empleado -->
   <div *ngIf="isLoggedIn() && isAdmin()">
     <button style="color:rgb(14, 110, 235);" mat-button [matMenuTriggerFor]="empleadoMenu">Empleados</button>
@@ -19,7 +18,6 @@
       <button (click)="goToNuevoEmplado()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Nuevo empleado</button>
     </mat-menu>
   </div>
-
   <!-- Menú Citas -->
   <div *ngIf="isLoggedIn()">
     <button style="color:rgb(14, 110, 235);" mat-button [matMenuTriggerFor]="citasMenu">Citas</button>
@@ -48,9 +46,7 @@
   </div>
   <div>
     <button (click)="goToHome()" style="color:rgb(14, 110, 235);" mat-button>Home</button>
-
   </div>
-
 </nav>
 <div style="height:80vh;">
   <router-outlet></router-outlet>

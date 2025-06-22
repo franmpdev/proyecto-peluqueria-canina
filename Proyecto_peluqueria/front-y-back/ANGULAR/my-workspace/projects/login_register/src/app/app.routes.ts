@@ -4,7 +4,6 @@ import { HomeComponent } from './views/home/home.component';
 import { AuthComponent } from './views/auth/auth.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-
 import { MisMascotasComponent } from './views/usuario/mascotas/mis-mascotas/mis-mascotas.component';
 import { NuevaMascotaComponent } from './views/usuario/mascotas/nueva-mascota/nueva-mascota.component';
 import { GestionCitasComponent } from './views/admin/citas/gestion-citas/gestion-citas.component';
@@ -17,7 +16,6 @@ import { MisCitasComponent } from './views/usuario/citas/mis-citas/mis-citas.com
 import { ProductosComponent } from './components/productos/productos.component';
 
 export const routes: Routes = [
-
   {
     path: 'home',
     component: HomeComponent,
@@ -48,12 +46,10 @@ export const routes: Routes = [
     path: 'nuevo-empleado',
     component: NuevoEmpleadoComponent
   },
-
   {
     path: 'gestion-mascotas',
     component: MascotasComponent
   },
-
   {
     path: 'nueva-cita-cliente',
     component: NuevaCitaClienteComponent
@@ -72,16 +68,13 @@ export const routes: Routes = [
     path: 'nueva-cita-empleado',
     component: NuevaCitaEmpleadoComponent
   },
-
   {
     path: 'productos',
     component: ProductosComponent
   },
-
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
-
 ];

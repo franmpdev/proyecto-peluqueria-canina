@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { UserService } from './service/user.service';
 import { EmpleadoService } from './service/empleado.service';
 import { ClienteService } from './service/cliente.service';
-
 @Component({
   selector: 'app-root',
   imports: [RouterModule, CommonModule, MatMenuModule, MatButtonModule],
@@ -22,16 +21,15 @@ import { ClienteService } from './service/cliente.service';
 })
 export class AppComponent {
   constructor(private userService: UserService,private router: Router, private clienteService: ClienteService, private empleadoService: EmpleadoService){}
-
   isLoggedIn(): boolean {
     return !!localStorage.getItem('user');
   }
   isAdmin():boolean{
     return !!localStorage.getItem('empleado');
   }
-isCliente():boolean{
-  return !!localStorage.getItem('cliente');
-}
+  isCliente():boolean{
+    return !!localStorage.getItem('cliente');
+  }
   logout(): void {
     localStorage.clear()
     this.clienteService.removeCliente();
@@ -41,7 +39,6 @@ isCliente():boolean{
   goToHome() {
       this.router.navigate(['/home']);
   }
-
   //LOGIN Y REGISTRO
   goToLogin() {
       this.router.navigate(['/auth/login']);
@@ -59,8 +56,6 @@ isCliente():boolean{
   goToMascotas(){
       this.router.navigate(['/gestion-mascotas']);
   }
-
-
   //EMPLEADOS
   goToMisEmpleados(){
       this.router.navigate(['/mis-empleados']);
@@ -71,11 +66,7 @@ isCliente():boolean{
   goToProductos(){
       this.router.navigate(['/productos']);
   }
-
-
-
   //CITAS
-
   goToMisCitas(){
       this.router.navigate(['/mis-citas']);
   }
@@ -88,6 +79,4 @@ isCliente():boolean{
     goToNuevaCitaCliente(){
       this.router.navigate(['/nueva-cita-cliente']);
   }
-
-
 }

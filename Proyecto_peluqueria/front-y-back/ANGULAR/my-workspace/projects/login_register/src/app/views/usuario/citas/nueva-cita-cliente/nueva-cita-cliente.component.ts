@@ -7,7 +7,6 @@ import { MascotaService } from '../../../../service/mascota.service';
 import { MascotaDatosDto } from '../../../../model/MascotaDatosDto';
 import { EmpleadoService } from '../../../../service/empleado.service';
 import { EmpleadoDatosDto } from '../../../../model/EmpleadoDatosDto';
-
 @Component({
   selector: 'app-nueva-cita-cliente',
   templateUrl: './nueva-cita-cliente.component.html',
@@ -24,7 +23,6 @@ export class NuevaCitaClienteComponent {
   hora: string = '';
   mascotas: MascotaDatosDto[] = []; // Cambia el tipo según tu modelo de mascota
   empleados: EmpleadoDatosDto[] = []; // Cambia el tipo según tu modelo de empleado
-
   constructor(private empleadoService: EmpleadoService, private citaService: CitaService, private mascotasService: MascotaService) {}
   ngOnInit() {
     const cliente = JSON.parse(localStorage.getItem('cliente') || '{}');
@@ -32,11 +30,9 @@ export class NuevaCitaClienteComponent {
     this.mascotasService.getMascotasPorEmail(this.email_cliente).subscribe(mascotas => {
       this.mascotas = mascotas;
       // Asumiendo que quieres la primera mascota
-      console.log('Mascotas cargadas:', this.mascotas);
     });
     this.empleadoService.allEmpleados().subscribe(data => {
       this.empleados = data;
-      console.log('Empleados cargados:', this.empleados);
     });
   }
   onSubmit() {
@@ -53,12 +49,7 @@ export class NuevaCitaClienteComponent {
 
     this.citaService.crearCitaCliente(citaDto).subscribe({
       next: (respuesta) => {
-        console.log('Cita creada correctamente:', respuesta);
         // Aquí puedes limpiar el formulario o mostrar un mensaje de éxito
-      },
-      error: (error) => {
-        console.error('Error al crear la cita:', error);
-        // Aquí puedes mostrar un mensaje de error
       }
     });
   }

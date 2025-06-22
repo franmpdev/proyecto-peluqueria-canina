@@ -5,13 +5,11 @@
   box-shadow: 0 1px 4px #0001;
   min-width: 220px;
 }
-
 .mascota-card h3 {
   margin-top: 0;
   margin-bottom: 8px;
   color: #1976d2;
 }
-
 .mascota-card .label {
   font-weight: bold;
   color: #555;
