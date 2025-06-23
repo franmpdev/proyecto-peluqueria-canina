@@ -1,10 +1,10 @@
+import { ProductoDatosDto } from "./ProductoDatosDto";
+
 export class PedidoProductoAltaDto {
-  id_pedido: number;
-  id_producto: number;
+  producto: ProductoDatosDto;
   cantidad: number;
-  constructor(id_pedido: number, id_producto: number, cantidad: number) {
-    this.id_pedido = id_pedido;
-    this.id_producto = id_producto;
+  constructor(producto: ProductoDatosDto, cantidad: number) {
+    this.producto = producto;
     this.cantidad = cantidad;
   }
 }

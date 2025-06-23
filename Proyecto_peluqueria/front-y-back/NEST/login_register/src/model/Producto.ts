@@ -1,38 +1,30 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
-import { PedidoProducto } from './PedidoProducto';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Categoria } from './Categoria';
 
 @Entity('productos')
 export class Producto {
-  @PrimaryGeneratedColumn()
-  id_producto: number;
+  @PrimaryGeneratedColumn({ name: 'id_producto' })
+  id: number;
 
   @Column()
   nombre: string;
 
-  @Column()
+  @Column('text')
   descripcion: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
   precio: number;
-
-  @Column()
-  id_categoria:number;
-  @ManyToOne(() => Categoria, categoria => categoria.productos)
-  @JoinColumn({ name: 'id_categoria' })
-  categoria: Categoria;
-
-
   @Column()
   stock: number;
+  @ManyToOne(() => Categoria, (categoria) => categoria.productos)
+  @JoinColumn({ name: 'id_categoria' }) // Asegúrate que esto coincida con el nombre real en la DB
+  categoria: Categoria;
 
-  @OneToMany(() => PedidoProducto, pp => pp.producto)
-  pedidosProductos: PedidoProducto[];
-
-  constructor(nombre?: string, descripcion?: string, precio?: number, stock?: number) {
+  constructor(nombre?: string, descripcion?: string, precio?: number, stock?: number, categoria?: Categoria) {
     this.nombre = nombre;
     this.descripcion = descripcion;
     this.precio = precio;
     this.stock = stock;
+    this.categoria = categoria;
   }
 }

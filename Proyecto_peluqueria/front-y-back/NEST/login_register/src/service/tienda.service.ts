@@ -1,7 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoAltaDto } from 'src/dto/PedidoAltaDto';
+import { PedidoDatosDto } from 'src/dto/PedidoDatosDto';
 import { PedidoProductoAltaDto } from 'src/dto/PedidoProductoAltaDto';
+import { PedidoProductoDatosDto } from 'src/dto/PedidoProductoDatosDto';
 import { ProductoAltaDto } from 'src/dto/ProductoAltaDto';
 import { ProductoDatosDto } from 'src/dto/ProductoDatosDto';
 import { Pedido } from 'src/model/Pedido';
@@ -44,11 +46,11 @@ export class TiendaService {
   //Crear un pedido y obtener su ID
     async crearPedido(email: string): Promise<number> {
     const pedido = this.pedidoRepo.create({
-      email_cliente: email,
+      emailCliente: email,
       fecha: new Date(),
     });
     const pedidoGuardado = await this.pedidoRepo.save(pedido);
-    return pedidoGuardado.id_pedido; // Aquí obtienes el ID del pedido creado
+    return pedidoGuardado.id; // Aquí obtienes el ID del pedido creado
   }
   //Añadir un producto al pedido
   async añadirProductoAlPedido(dto: PedidoProductoAltaDto):Promise<boolean>{
@@ -58,4 +60,45 @@ export class TiendaService {
     });
     return true;
   }
+  async findPedidosByClient(email: string): Promise<PedidoDatosDto[]> {
+    const pedidos = await this.pedidoRepo.find({
+      where: { emailCliente: email },
+      relations: ['pedidosProductos', 'pedidosProductos.producto'],
+    });
+
+    const pedidosDto: PedidoDatosDto[] = [];
+
+    for (const pedido of pedidos) {
+      const productosDto: PedidoProductoDatosDto[] = [];
+
+      for (const pedProd of pedido.pedidosProductos) {
+        const producto = pedProd.producto;
+
+        const productoDto = new ProductoDatosDto(
+          producto.id,
+          producto.nombre,
+          producto.descripcion,
+          producto.precio,
+          producto.categoria?.id_categoria,
+          producto.stock
+        );
+
+        const pedProdDto = new PedidoProductoDatosDto(productoDto, pedProd.cantidad);
+        productosDto.push(pedProdDto);
+      }
+
+      const pedidoDto = new PedidoDatosDto(
+        pedido.id,
+        pedido.emailCliente,
+        productosDto,
+        pedido.fecha
+      );
+
+      pedidosDto.push(pedidoDto);
+    }
+
+    console.log(pedidosDto);
+    return pedidosDto;
+  }
 }
+

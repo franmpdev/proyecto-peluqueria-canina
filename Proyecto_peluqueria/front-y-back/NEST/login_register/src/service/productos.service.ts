@@ -33,7 +33,7 @@ export class ProductosService {
     }else{
       const nuevoProducto = this.repositoryProducto.create(articulo);
       const productocreado =  await this.repositoryProducto.save(nuevoProducto);
-      return new ProductoDatosDto(productocreado.id_producto, productocreado.nombre, productocreado.descripcion, productocreado.precio, productocreado.stock);
+      return new ProductoDatosDto(productocreado.id, productocreado.nombre, productocreado.descripcion, productocreado.precio, productocreado.stock);
     }
   }
 
@@ -61,15 +61,20 @@ export class ProductosService {
   //MOSTRAR TODOS LOS PRODUCTOS
 
   async findAllProduct(): Promise<ProductoDatosDto[]> {
-    const productos = await this.repositoryProducto.find();
+    const productos = await this.repositoryProducto.find(
+      {
+        relations: ['categoria']
+      }
+    );
     const productosDto: ProductoDatosDto[] = [];
 
     for (const prods of productos) {
       productosDto.push(
         new ProductoDatosDto(
-          prods.id_producto,
+          prods.id,
           prods.nombre,
           prods.descripcion,
+          prods.categoria.id_categoria,
           prods.precio,
           prods.stock
         )

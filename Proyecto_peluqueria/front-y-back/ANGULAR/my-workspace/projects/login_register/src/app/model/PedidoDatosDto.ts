@@ -1,13 +1,14 @@
 import { PedidoProductoDatosDto } from "./PedidoProductoDatosDto";
+
 export class PedidoDatosDto {
   id_pedido: number;
-  clienteEmail: string;
+  email_cliente: string;
+  pedidoproductos: PedidoProductoDatosDto[];
   fecha: Date;
-  productos: PedidoProductoDatosDto[]
-  constructor(id_pedido: number,fecha: Date, clienteEmail: string, productos: PedidoProductoDatosDto[]) {
+  constructor(id_pedido: number, email_cliente: string, pedidoproductos: PedidoProductoDatosDto[],fecha: Date,) {
     this.id_pedido = id_pedido;
+    this.email_cliente = email_cliente;
+    this.pedidoproductos = pedidoproductos;
     this.fecha = fecha;
-    this.clienteEmail = clienteEmail;
-    this.productos = productos;
   }
 }

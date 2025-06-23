@@ -1,8 +1,12 @@
+import { PedidoProductoAltaDto } from "./PedidoProductoAltaDto";
+
 export class PedidoAltaDto {
-  fecha: Date;
   email_cliente: string;
-  constructor(fecha: Date, email_cliente: string) {
-    this.fecha = fecha;
+  productos: PedidoProductoAltaDto[];
+  fecha: Date;
+  constructor(email_cliente: string, fecha: Date, productos: PedidoProductoAltaDto[]) {
     this.email_cliente = email_cliente;
+    this.productos=productos;
+    this.fecha = fecha;
   }
 }

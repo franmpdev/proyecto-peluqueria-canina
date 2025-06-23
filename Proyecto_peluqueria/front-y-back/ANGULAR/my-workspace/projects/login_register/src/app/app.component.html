@@ -5,8 +5,7 @@
       <mat-menu #perfilMenu="matMenu" yPosition="below">
         <button *ngIf="!isLoggedIn()" (click)="goToLogin()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Inicia Sesión</button>
         <button *ngIf="!isLoggedIn()" (click)="goToRegister()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Regístrate</button>
-        <button *ngIf="isLoggedIn() && isCliente()" (click)="logout()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Mis Pedidos</button>
-        <button *ngIf="isLoggedIn() && isCliente()" (click)="logout()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Nuevo Pedido</button>
+        <button *ngIf="isLoggedIn() && isCliente()" (click)="goToMisPedidos()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Mis Pedidos</button>
         <button *ngIf="isLoggedIn()" (click)="logout()" style="color:red;" class="mat-menu-item" mat-menu-item>Cierra sesión</button>
       </mat-menu>
   </div>
@@ -37,16 +36,26 @@
       <button *ngIf="isAdmin()" (click)="goToMascotas()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Gestionar Mascota</button>
     </mat-menu>
   </div>
-   <!-- Menú Tienda -->
-  <div>
-    <button style="color:rgb(14, 110, 235);" mat-button [matMenuTriggerFor]="productosMenu">Tienda</button>
-    <mat-menu #productosMenu="matMenu" yPosition="below" >
-      <button *ngIf="isAdmin()" (click)="goToProductos()" style="color:rgb(14, 110, 235);" class="mat-menu-item" mat-menu-item>Gestion Productos</button>
-    </mat-menu>
-  </div>
-  <div>
-    <button (click)="goToHome()" style="color:rgb(14, 110, 235);" mat-button>Home</button>
-  </div>
+  <!-- Menú Tienda -->
+<div>
+  <button mat-button [matMenuTriggerFor]="productosMenu" style="color:rgb(14, 110, 235);">Tienda</button>
+  <mat-menu #productosMenu="matMenu" yPosition="below">
+    <button *ngIf="isAdmin()" (click)="goToProductos()" mat-menu-item style="color:rgb(14, 110, 235);">
+      Gestion Productos
+    </button>
+    <button *ngIf="isCliente()" (click)="goToTienda()" mat-menu-item style="color:rgb(14, 110, 235);">
+      Tienda Online
+    </button>
+  </mat-menu>
+</div>
+
+<!-- Botón Home funcional -->
+<div>
+  <button mat-button (click)="goToHome()" style="color:rgb(14, 110, 235);">
+    Home
+  </button>
+</div>
+
 </nav>
 <div style="height:80vh;">
   <router-outlet></router-outlet>

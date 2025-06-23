@@ -4,27 +4,28 @@ import { PedidoProducto } from './PedidoProducto';
 
 @Entity('pedidos')
 export class Pedido {
-  @PrimaryGeneratedColumn()
-  id_pedido: number;
+  @PrimaryGeneratedColumn({ name: 'id_pedido' })
+  id: number;
 
-  @Column()
-  email_cliente: string;
+  @Column({ name: 'email_cliente' })
+  emailCliente: string;
 
-  @Column()
+  @Column({ type: 'date' })
   fecha: Date;
 
   @ManyToOne(() => Cliente, cliente => cliente.pedidos)
-  @JoinColumn({ name: 'cliente_email', referencedColumnName: 'email' }) 
+  @JoinColumn({ name: 'email_cliente', referencedColumnName: 'email' })
   cliente: Cliente;
 
-  @OneToMany(() => PedidoProducto, pp => pp.pedido)
+  @OneToMany(() => PedidoProducto, pp => pp.pedido, { cascade: true, eager: true })
   pedidosProductos: PedidoProducto[];
 
-  constructor(fecha?: Date, cliente?: Cliente) {
-    this.fecha = fecha;
+  constructor(fecha?: Date, cliente?: Cliente, pedidosProductos?: PedidoProducto[]) {
+    this.fecha = fecha ?? new Date();
     this.cliente = cliente;
-    if(cliente){
-      this.email_cliente = cliente.email;
+    this.emailCliente = cliente?.email;
+    if (pedidosProductos) {
+      this.pedidosProductos = pedidosProductos;
     }
   }
 }

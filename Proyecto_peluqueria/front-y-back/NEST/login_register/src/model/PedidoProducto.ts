@@ -1,29 +1,31 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { Pedido } from './Pedido';
 import { Producto } from './Producto';
 
 @Entity('pedidos_productos')
 export class PedidoProducto {
-  @PrimaryColumn()
-  id_pedido: number;
+  @PrimaryColumn({ name: 'id_pedido' })
+  idPedido: number;
 
-  @PrimaryColumn()
-  id_producto: number;
+  @PrimaryColumn({ name: 'id_producto' })
+  idProducto: number;
 
   @Column()
   cantidad: number;
-  
+
   @ManyToOne(() => Pedido, pedido => pedido.pedidosProductos, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'id_pedido', referencedColumnName: 'id_pedido' })
+  @JoinColumn({ name: 'id_pedido' })
   pedido: Pedido;
 
-  @ManyToOne(() => Producto, producto => producto.pedidosProductos, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'id_producto', referencedColumnName: 'id_producto' })
+  @ManyToOne(() => Producto, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'id_producto' })
   producto: Producto;
 
-  constructor(id_pedido: number, id_producto: number, cantidad: number) {
-    this.id_pedido = id_pedido;
-    this.id_producto = id_producto;
+  constructor(pedido?: Pedido, producto?: Producto, cantidad?: number) {
+    this.pedido = pedido;
+    this.idPedido = pedido?.id;
+    this.producto = producto;
+    this.idProducto = producto?.id;
     this.cantidad = cantidad;
   }
 }

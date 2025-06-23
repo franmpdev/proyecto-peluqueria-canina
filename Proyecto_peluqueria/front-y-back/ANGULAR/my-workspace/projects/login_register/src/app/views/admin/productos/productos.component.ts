@@ -33,7 +33,6 @@ export class ProductosComponent {
     this.categoriaService.allCategorias().subscribe({
       next: (categorias) => {
         this.categorias = categorias;
-        console.log(categorias)
       }
     });
     this.mostrarProductos();

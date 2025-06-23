@@ -110,8 +110,6 @@ export class CitaService {
 }
 async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boolean> {
   try {
-    console.log('Datos recibidos:', cita);
-
     // Formatea la fecha para comparación (solo yyyy-mm-dd)
     const fechaStr = cita.fecha instanceof Date
       ? cita.fecha.toISOString().slice(0, 10)
@@ -123,15 +121,11 @@ async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boo
         hora: cita.hora
       })
       .getOne();
-
     if (citaRepetida) {
-      console.warn('Ya existe una cita para esa fecha y hora');
       return false;
     }
-
     // Verifica si el cliente existe; si no, lo crea
     let cliente = await this.clienteService.findClienteByEmail(cita.email_cliente);
-    console.log(cliente)
     if (!cliente) {
       const clienteNuevo = new ClienteAltaDto(
         cita.email_cliente,
@@ -140,7 +134,6 @@ async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boo
         cita.telefono_cliente 
       );
       cliente = await this.clienteService.highClient(clienteNuevo);
-      console.log('Cliente creado:', cliente);
     }
 
     // Verifica si la mascota existe
@@ -158,13 +151,11 @@ async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boo
         cita.edad
       );
       mascota = await this.mascotasService.highAnimals(mascotaNuevaDto);
-      console.log('Mascota creada:', mascota);
     }
 
 
     // Si la mascota fue creada o ya existía, se crea la cita
     if (mascota && typeof mascota === 'object' && 'id_mascota' in mascota ) {
-      console.log('Creando cita...')
       const nuevaCitaDto = new CitaAltaDto(
         cita.email_cliente,
         cita.dni_empleado,
@@ -172,7 +163,6 @@ async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boo
         cita.fecha,
         cita.hora
       );
-      console.log('Datos de la nueva cita:', nuevaCitaDto);
       const nuevaCita = this.repositoryCita.create(nuevaCitaDto);
       const citaCreada = await this.repositoryCita.save(nuevaCita);
       return new CitaDatosDto(
@@ -188,7 +178,6 @@ async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boo
     return false;
 
   } catch (error) {
-    console.error('Error en highQuoteByEmployee:', error);
     return false;
   }
 }

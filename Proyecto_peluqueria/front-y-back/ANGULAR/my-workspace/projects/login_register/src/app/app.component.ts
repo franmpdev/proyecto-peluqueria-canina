@@ -14,7 +14,7 @@ import { ClienteService } from './service/cliente.service';
   styleUrls:['./app.component.css']
 })
 export class AppComponent {
-  constructor(private userService: UserService,private router: Router, private clienteService: ClienteService, private empleadoService: EmpleadoService){}
+  constructor(private router: Router, private clienteService: ClienteService, private empleadoService: EmpleadoService){}
   isLoggedIn(): boolean {
     return !!localStorage.getItem('user');
   }
@@ -70,7 +70,14 @@ export class AppComponent {
   goToNuevaCitaEmpleado(){
       this.router.navigate(['/nueva-cita-empleado']);
   }
-    goToNuevaCitaCliente(){
+  goToNuevaCitaCliente(){
       this.router.navigate(['/nueva-cita-cliente']);
+  }
+  goToTienda(){
+    console.log('paso por aqui')
+      this.router.navigate(['/tienda']);
+  }
+  goToMisPedidos(){
+      this.router.navigate(['/mis-pedidos'])
   }
 }
