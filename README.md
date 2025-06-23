@@ -33,8 +33,8 @@ Proyecto_peluqueria/
 ├── front-y-back/
 │   ├── ANGULAR/           # Frontend Angular
 │   └── NEST/              # Backend NestJS
+|   |__db.md                 # Scripts SQL para la base de datos
 │
-├── db/                    # Scripts SQL para la base de datos
 └── README.md
 ```
 
