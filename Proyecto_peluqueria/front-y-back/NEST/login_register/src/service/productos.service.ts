@@ -14,27 +14,34 @@ export class ProductosService {
   
   // ALTA PRODUCTO  
 
-  async highProduct(producto:ProductoAltaDto):Promise<ProductoDatosDto | boolean>{
-
-    // Verifica si el empleado existe, si no, lo crea
-    let articulo :Producto = await this.repositoryProducto.findOne({ where: { nombre: producto.nombre, descripcion: producto.descripcion} });
-
-    if (!articulo) {
-      articulo = this.repositoryProducto.create(producto);
-      await this.repositoryProducto.save(articulo);
-
-    }
-    const existe = await this.repositoryProducto.createQueryBuilder("producto")
-    .where("id_producto=:id_producto", { id_producto:producto.id_producto })
-    .getOne()
-    
-    if(existe){
+   async highProduct(dto: ProductoAltaDto): Promise<ProductoDatosDto | boolean> {
+    // 1️ Evita duplicados buscando por nombre y descripción
+    const existe = await this.repositoryProducto.findOne({
+      where: { nombre: dto.nombre, descripcion: dto.descripcion },
+    });
+    if (existe) {
       return false;
-    }else{
-      const nuevoProducto = this.repositoryProducto.create(articulo);
-      const productocreado =  await this.repositoryProducto.save(nuevoProducto);
-      return new ProductoDatosDto(productocreado.id, productocreado.nombre, productocreado.descripcion, productocreado.precio, productocreado.stock);
     }
+
+    // 2️ Crea y guarda
+    const entidad = this.repositoryProducto.create({
+      nombre: dto.nombre,
+      descripcion: dto.descripcion,
+      precio: dto.precio,
+      stock: dto.stock,
+      categoria: { id_categoria: dto.id_categoria } as any,
+    });
+    const creado = await this.repositoryProducto.save(entidad);
+
+    // 3️ Devuelve DTO de datos
+    return new ProductoDatosDto(
+      creado.id,
+      creado.nombre,
+      creado.descripcion,
+      creado.categoria.id_categoria,
+      creado.precio,
+      creado.stock,
+    );
   }
 
   //BAJA PRODUCTO
@@ -47,16 +54,32 @@ export class ProductosService {
   
   //MODIFICAR PRODUCTO
 
-  async modifyProduct(id:number, producto: ProductoAltaDto):Promise<boolean>{
-    const result = await this.repositoryProducto.createQueryBuilder()
-    .update(Producto)
-    .set({ ...producto })
-    .where("id_producto=:id ", 
-      { id })
-    .execute();
+  async modifyProduct(id: number, dto: ProductoAltaDto): Promise<boolean> {
+  // 1️⃣ Actualiza los campos simples
+  const result = await this.repositoryProducto.update(id, {
+    nombre: dto.nombre,
+    descripcion: dto.descripcion,
+    precio: dto.precio,
+    stock: dto.stock,
+  });
 
-    return result.affected && result.affected > 0;
+  // Si no había ninguna fila con ese id, salimos
+  if (result.affected === 0) {
+    return false;
   }
+
+  // 2️⃣ Actualiza la relación categoria → id_categoria
+  // Solo si nos han pasado un id de categoría válido
+  if (dto.id_categoria != null) {
+    await this.repositoryProducto
+      .createQueryBuilder()
+      .relation(Producto, 'categoria')    // nombre de la propiedad en la entidad
+      .of(id)                             // sobre este producto
+      .set(dto.id_categoria);             // asigna la FK
+  }
+
+  return true;
+}
 
   //MOSTRAR TODOS LOS PRODUCTOS
 

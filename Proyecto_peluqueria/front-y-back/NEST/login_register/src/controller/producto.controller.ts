@@ -47,15 +47,15 @@ export class ProductoController {
   }
   @Patch('modificarProducto/:id')
   modifyProductos(@Param('id') id:number, @Body() producto:ProductoAltaDto, @Res() res: Response){
-     if(this.productoService.modifyProduct(id, producto)){
-        return res.status(201).json({
-          message: "Se modifico el producto"
-        });
-     }
-     else{
+    if(this.productoService.modifyProduct(id, producto)){
+      return res.status(201).json({
+        message: "Se modifico el producto"
+      });
+    }
+    else{
       return res.status(404).json({
         massage: "No se pudo modificar el producto"
       });
-     }
+    }
   }
 }

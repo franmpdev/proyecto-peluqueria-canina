@@ -96,8 +96,6 @@ export class TiendaService {
 
       pedidosDto.push(pedidoDto);
     }
-
-    console.log(pedidosDto);
     return pedidosDto;
   }
 }
