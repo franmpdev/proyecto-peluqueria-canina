@@ -45,17 +45,17 @@ export class TiendaService {
 
   //Crear un pedido y obtener su ID
   async crearPedidoConProductos(dto: PedidoAltaDto): Promise<number> {
-  // 1️⃣ CREAR Y GUARDAR EL PEDIDO
+  // 1️ CREAR Y GUARDAR EL PEDIDO
   const pedido = this.pedidoRepo.create({
     emailCliente: dto.email_cliente,
     fecha:        new Date(dto.fecha),
   });
   const guardado = await this.pedidoRepo.save(pedido);
 
-  // 2️⃣ CREAR Y GUARDAR CADA LÍNEA usando this.ppRepo, ¡no this.pedidoRepo!
+  // 2️ CREAR Y GUARDAR CADA PEDIDOPRODUCTO
   for (const linea of dto.productos) {
     const pp = this.pedidoProductoRepo.create({
-      pedido:   guardado,                     // <— OK: propiedad de PedidoProducto
+      pedido:   guardado,
       producto: { id: linea.id_producto } as any,
       cantidad: linea.cantidad,
     });

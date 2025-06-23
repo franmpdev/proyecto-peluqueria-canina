@@ -15,12 +15,16 @@ import { PedidoProductoAltaDto } from '../../../model/PedidoProductoAltaDto';
 })
 export class TiendaComponent implements OnInit {
   productos: ProductoDatosDto[] = [];
-  carrito: PedidoProductoAltaDto[] = [];
+  carrito: ProductoDatosDto[] = [];
+  pedidoProductos: PedidoProductoAltaDto[] = [];
   mensajeExito = false;
 
   constructor(private productoService: ProductosService) {}
   async ngOnInit() {
     this.cargarProductos();
+  }
+  obtenerCantidad(id_producto: number): number {
+  return this.pedidoProductos.find(p => p.id_producto === id_producto)?.cantidad || 0;
   }
   cargarProductos(){
   this.productoService.allProduct().subscribe(
@@ -31,49 +35,47 @@ export class TiendaComponent implements OnInit {
       }
     });
   }
-  agregarAlCarrito(id_producto: number):void {
-    const productoSeleccionado = this.productos.find(producto => producto.id_producto === id_producto);
-    console.log(this.productos)
-    const prod = this.carrito.find(pedidoproducto => pedidoproducto.producto.id_producto=== id_producto);
-    if(!productoSeleccionado){
-      return;
-    }
-    if(!prod){
-      const nuevo = new PedidoProductoAltaDto(productoSeleccionado, 1)
-      this.carrito.push(nuevo)
-      console.log(nuevo)
-    }
-    return;
-  }
-  sumarAlPedido(id_producto:number) {
-    let itemCarrito = this.carrito.find(p => p.producto.id_producto === id_producto);
-    if(!itemCarrito)
-      return;
-    if(itemCarrito.producto.stock < itemCarrito.cantidad + 1)
-      return;
-    itemCarrito.cantidad+=1;
-  }
-  restarAlPedido(id_producto:number) {
-    console.log('paso por aqui')
-    let itemCarrito = this.carrito.find(p => p.producto.id_producto === id_producto);
-    if(!itemCarrito)
-      return;
-    itemCarrito.cantidad-=1;
-    if(itemCarrito.cantidad === 0){
-      this.carrito = this.carrito.filter(el => el.cantidad>0)
-    }
-    return;
-  }
-  eliminarDelCarrito(id:number) {
-    this.carrito = this.carrito.filter(i => i.producto.id_producto !== id);
-  }
+  agregarAlCarrito(id_producto: number) {
+  const producto = this.productos.find(p => p.id_producto === id_producto);
+  if (!producto) return;
 
-  calcularTotal(): number {
-    return this.carrito.reduce((total, item) => total + (item.producto.precio * item.cantidad), 0)
-}
-  pagar() {
-    this.carrito = [];
-    this.mensajeExito = true;
-    setTimeout(() => this.mensajeExito = false, 3000);
+  const index = this.carrito.findIndex(p => p.id_producto === id_producto);
+  if (index === -1) {
+    this.carrito.push({ ...producto });
+    this.pedidoProductos.push({ id_producto, cantidad: 1 });
   }
+}
+ sumarAlPedido(id_producto: number) {
+  const pedido = this.pedidoProductos.find(p => p.id_producto === id_producto);
+  const producto = this.carrito.find(p => p.id_producto === id_producto);
+  if (pedido && producto && pedido.cantidad < producto.stock) {
+    pedido.cantidad++;
+  }
+}
+restarAlPedido(id_producto: number) {
+  const pedido = this.pedidoProductos.find(p => p.id_producto === id_producto);
+  if (pedido) {
+    pedido.cantidad--;
+    if (pedido.cantidad <= 0) {
+      this.eliminarDelCarrito(id_producto);
+    }
+  }
+}
+
+eliminarDelCarrito(id_producto: number) {
+  this.carrito = this.carrito.filter(p => p.id_producto !== id_producto);
+  this.pedidoProductos = this.pedidoProductos.filter(p => p.id_producto !== id_producto);
+}
+calcularTotal(): number {
+  return this.pedidoProductos.reduce((total, pedido) => {
+    const producto = this.carrito.find(p => p.id_producto === pedido.id_producto);
+    return total + (producto ? producto.precio * pedido.cantidad : 0);
+  }, 0);
+}
+pagar() {
+  const payload = {
+    fecha: new Date(),
+    pedidosProductos: this.pedidoProductos
+  };
+}
 }

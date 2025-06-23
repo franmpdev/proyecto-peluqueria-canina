@@ -2,9 +2,9 @@
   <h1>Productos</h1>
   <div class="productos">
     <div class="card" *ngFor="let producto of productos">
-      <h2>{{producto.nombre}}</h2>
-      <p>{{producto.descripcion}}</p>
-      <span class="precio">{{producto.precio | currency:'EUR'}}</span>
+      <h2>{{ producto.nombre }}</h2>
+      <p>{{ producto.descripcion }}</p>
+      <span class="precio">{{ producto.precio | currency:'EUR' }}</span>
       <button (click)="agregarAlCarrito(producto.id_producto)" [disabled]="producto.stock <= 0">
         Añadir al carrito
       </button>
@@ -15,25 +15,33 @@
   <div class="carrito">
     <h2>Carrito</h2>
     <div *ngIf="carrito.length === 0">El carrito está vacío.</div>
-    <div *ngFor=" let item of carrito">
+
+    <div *ngFor="let producto of carrito">
       <div class="carrito-item">
-        <span>{{item.producto.nombre}}</span>
-        <button (click)="restarAlPedido(item.producto.id_producto)" >-</button>
-        <span>{{item.cantidad}}</span>
+        <span>{{ producto.nombre }}</span>
+
+        <button (click)="restarAlPedido(producto.id_producto)">-</button>
+        <span>{{ obtenerCantidad(producto.id_producto) }}</span>
         <button
-          (click)="sumarAlPedido(item.producto.id_producto)" [disabled]="item.cantidad >= (item.producto.stock)">
+          (click)="sumarAlPedido(producto.id_producto)"
+          [disabled]="obtenerCantidad(producto.id_producto) >= producto.stock"
+        >
           +
         </button>
+
         <span class="stock-info">
-          Stock: {{item.producto.stock}}
+          Stock: {{ producto.stock }}
         </span>
-        <button class="eliminar" (click)="eliminarDelCarrito(item.producto.id_producto)">Eliminar</button>
+
+        <button class="eliminar" (click)="eliminarDelCarrito(producto.id_producto)">Eliminar</button>
       </div>
     </div>
+
     <div class="total" *ngIf="carrito.length > 0">
-      Total: {{calcularTotal() | currency:'EUR'}}
+      Total: {{ calcularTotal() | currency:'EUR' }}
     </div>
     <button class="pagar" *ngIf="carrito.length > 0" (click)="pagar()">Pagar</button>
+
     <div *ngIf="mensajeExito" class="exito">
       ¡Compra realizada con éxito! 🎉
     </div>
