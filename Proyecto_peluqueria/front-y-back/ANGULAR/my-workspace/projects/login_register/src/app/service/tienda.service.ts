@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PedidoDatosDto } from '../model/PedidoDatosDto';
 import { ProductoDatosDto } from '../model/ProductoDatosDto';
 import { ProductoAltaDto } from '../model/ProductoAltaDto';
+import { PedidoAltaDto } from '../model/PedidoAltaDto';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,8 @@ export class TiendaService {
   }
   obtenerPedidos(email: string): Observable<PedidoDatosDto[]> {
     return this.http.get<PedidoDatosDto[]>(`${this.apiUrl}/pedidos/${email}`);
+  }
+  crearPedido(pedido: PedidoAltaDto): Observable<Partial<PedidoDatosDto>> {
+    return this.http.post<Partial<PedidoDatosDto>>(`${this.apiUrl}/pedidos/nuevoPedido`, pedido);
   }
 }
