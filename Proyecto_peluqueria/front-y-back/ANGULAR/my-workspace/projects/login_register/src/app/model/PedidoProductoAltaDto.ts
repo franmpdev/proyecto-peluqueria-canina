@@ -1,5 +1,3 @@
-import { ProductoDatosDto } from "./ProductoDatosDto";
-
 export class PedidoProductoAltaDto {
   id_producto: number;
   cantidad: number;
