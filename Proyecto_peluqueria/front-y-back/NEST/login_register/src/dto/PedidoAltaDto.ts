@@ -1,13 +1,17 @@
 import { IsDate, IsEmail, Length } from "class-validator";
+import { PedidoProductoAltaDto } from "./PedidoProductoAltaDto";
 
 export class PedidoAltaDto {
-  @IsDate()
-  fecha: Date;
   @IsEmail()
-  @Length(10,40)
   email_cliente: string;
-  constructor(fecha: Date, email_cliente: string) {
-    this.fecha = fecha;
+  @IsDate()
+  fecha: string;
+
+  productos: PedidoProductoAltaDto[];
+
+  constructor(email_cliente: string, fecha: string, productos: PedidoProductoAltaDto[]) {
     this.email_cliente = email_cliente;
+    this.fecha = fecha;
+    this.productos = productos;
   }
 }

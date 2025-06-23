@@ -44,19 +44,32 @@ export class TiendaService {
   }
 
   //Crear un pedido y obtener su ID
-    async crearPedido(email: string): Promise<number> {
-    const pedido = this.pedidoRepo.create({
-      emailCliente: email,
-      fecha: new Date(),
+  async crearPedidoConProductos(dto: PedidoAltaDto): Promise<number> {
+  // 1️⃣ CREAR Y GUARDAR EL PEDIDO
+  const pedido = this.pedidoRepo.create({
+    emailCliente: dto.email_cliente,
+    fecha:        new Date(dto.fecha),
+  });
+  const guardado = await this.pedidoRepo.save(pedido);
+
+  // 2️⃣ CREAR Y GUARDAR CADA LÍNEA usando this.ppRepo, ¡no this.pedidoRepo!
+  for (const linea of dto.productos) {
+    const pp = this.pedidoProductoRepo.create({
+      pedido:   guardado,                     // <— OK: propiedad de PedidoProducto
+      producto: { id: linea.id_producto } as any,
+      cantidad: linea.cantidad,
     });
-    const pedidoGuardado = await this.pedidoRepo.save(pedido);
-    return pedidoGuardado.id; // Aquí obtienes el ID del pedido creado
+    await this.pedidoProductoRepo.save(pp);
   }
+
+  return guardado.id;
+}
+  
   //Añadir un producto al pedido
   async añadirProductoAlPedido(dto: PedidoProductoAltaDto):Promise<boolean>{
     const pedidoProducto = this.pedidoProductoRepo.create(dto);
     await this.pedidoProductoRepo.save(pedidoProducto).catch(error => {
-       return false;
+      return false;
     });
     return true;
   }
@@ -65,15 +78,11 @@ export class TiendaService {
       where: { emailCliente: email },
       relations: ['pedidosProductos', 'pedidosProductos.producto'],
     });
-
     const pedidosDto: PedidoDatosDto[] = [];
-
     for (const pedido of pedidos) {
       const productosDto: PedidoProductoDatosDto[] = [];
-
       for (const pedProd of pedido.pedidosProductos) {
         const producto = pedProd.producto;
-
         const productoDto = new ProductoDatosDto(
           producto.id,
           producto.nombre,
@@ -82,18 +91,15 @@ export class TiendaService {
           producto.categoria?.id_categoria,
           producto.stock
         );
-
         const pedProdDto = new PedidoProductoDatosDto(productoDto, pedProd.cantidad);
         productosDto.push(pedProdDto);
       }
-
       const pedidoDto = new PedidoDatosDto(
         pedido.id,
         pedido.emailCliente,
         productosDto,
         pedido.fecha
       );
-
       pedidosDto.push(pedidoDto);
     }
     return pedidosDto;

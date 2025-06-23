@@ -1,17 +1,13 @@
-import { IsInt, IsObject } from "class-validator";
-import { ProductoDatosDto } from "./ProductoDatosDto";
-
+import { IsNumber, Min } from "class-validator";
 export class PedidoProductoAltaDto {
-  @IsInt()
-  id_pedido: number;
-  @IsObject()
-  producto: ProductoDatosDto; 
-  @IsInt()
+  @IsNumber()
+  id_producto: number;
+  @IsNumber()
+  @Min(1)
   cantidad: number;
 
-  constructor(id_pedido: number, producto: ProductoDatosDto, cantidad: number) {
-    this.id_pedido = id_pedido;
-    this.producto = producto;
+  constructor(id_producto: number, cantidad: number) {
+    this.id_producto = id_producto;
     this.cantidad = cantidad;
   }
 }

@@ -1,10 +1,11 @@
 import { ProductoDatosDto } from "./ProductoDatosDto";
 
 export class PedidoProductoAltaDto {
-  producto: ProductoDatosDto;
+  id_producto: number;
   cantidad: number;
-  constructor(producto: ProductoDatosDto, cantidad: number) {
-    this.producto = producto;
+
+  constructor( id_producto: number, cantidad: number) {
+    this.id_producto = id_producto;
     this.cantidad = cantidad;
   }
 }

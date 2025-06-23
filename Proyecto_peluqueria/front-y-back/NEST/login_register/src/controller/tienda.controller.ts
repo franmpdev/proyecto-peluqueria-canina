@@ -10,11 +10,19 @@ import {
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { PedidoAltaDto } from 'src/dto/PedidoAltaDto';
 
 
 @Controller('tiendas')
 export class TiendaController {
   constructor(private readonly tiendaService: TiendaService) {}
+
+  @Post('pedidos/nuevoPedido')
+  async crearPedidoCompleto(
+    @Body() dto: PedidoAltaDto): Promise<{ id_pedido: number }> {
+    const id_pedido = await this.tiendaService.crearPedidoConProductos(dto);
+    return { id_pedido };
+  }
 
   @Get('Productos')
   mostrarTodos(){
