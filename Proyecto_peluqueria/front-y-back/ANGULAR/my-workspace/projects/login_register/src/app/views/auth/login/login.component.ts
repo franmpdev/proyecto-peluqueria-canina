@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ClienteService } from '../../service/cliente.service';
+import { ClienteService } from '../../../service/cliente.service';
 import { RouterModule, Router } from '@angular/router';
-import { UserDatosDto } from '../../model/UserDatosDto';
-import { EmpleadoService } from '../../service/empleado.service';
-import { UserService } from '../../service/user.service';
+import { UserDatosDto } from '../../../model/UserDatosDto';
+import { EmpleadoService } from '../../../service/empleado.service';
+import { UserService } from '../../../service/user.service';
 @Component({
   selector: 'app-login',
   imports: [FormsModule,CommonModule, RouterModule],

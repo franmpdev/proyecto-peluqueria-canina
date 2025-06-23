@@ -6,9 +6,11 @@ form {
   border-radius: 14px;
   box-shadow: 0 4px 16px rgba(30, 64, 175, 0.08);
 }
+
 div {
   margin-bottom: 20px;
 }
+
 label {
   display: block;
   margin-bottom: 7px;
@@ -16,6 +18,7 @@ label {
   color: #1e40af;
   letter-spacing: 0.5px;
 }
+
 input[type="text"],
 input[type="email"],
 input[type="number"],
@@ -31,12 +34,14 @@ select {
   transition: border 0.2s;
   box-sizing: border-box;
 }
+
 input:focus,
 select:focus {
   border-color: #2563eb;
   outline: none;
   background: #e0e7ff;
 }
+
 button[type="submit"] {
   width: 100%;
   padding: 12px 0;
@@ -50,10 +55,12 @@ button[type="submit"] {
   transition: background 0.2s, box-shadow 0.2s;
   box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
 }
+
 button[type="submit"]:hover:enabled {
   background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
   box-shadow: 0 4px 16px rgba(30, 64, 175, 0.15);
 }
+
 button[disabled] {
   background: #b6c6e3;
   cursor: not-allowed;

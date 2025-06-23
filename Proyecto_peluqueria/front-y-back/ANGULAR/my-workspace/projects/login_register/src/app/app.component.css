@@ -1,0 +1,88 @@
+.main-navbar {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 2px 12px 0 rgba(255,78,122,0.07);
+  border-radius: 0 0 18px 18px;
+  padding: 12px 24px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 18px auto 32px auto;
+  box-sizing: border-box;
+  overflow-x: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-btn {
+  color: #ff4e7a !important;
+  font-weight: 600;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  transition: background 0.18s, color 0.18s;
+  font-size: 1.08rem;
+  white-space: nowrap;
+}
+nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.nav-btn:hover, .nav-menu-item:hover {
+  background: #ffe4ec !important;
+  color: #d81b60 !important;
+}
+
+.nav-menu-item {
+  color: #ff4e7a !important;
+  font-weight: 500;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.logout {
+  color: #e53935 !important;
+}
+.brand{
+  text-align: center;
+  font-size: 1.2rem;
+}
+/* Tablet: apila los botones y alinea a la derecha */
+@media (max-width: 900px) {
+  .main-navbar {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 2vw;
+    max-width: 100%;
+    width: 100%;
+    margin: 10px 0 18px 0;
+    border-radius: 0 0 14px 14px;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .nav-btn {
+    font-size: 0.98rem;
+    padding: 7px 10px;
+  }
+}
+
+/* Móvil: más compacto y botones a la derecha */
+@media (max-width: 600px) {
+  .main-navbar {
+    gap: 6px;
+    padding: 6px 2vw;
+    border-radius: 0 0 10px 10px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .nav-btn {
+    font-size: 0.95rem;
+    padding: 6px 6px;
+  }
+}

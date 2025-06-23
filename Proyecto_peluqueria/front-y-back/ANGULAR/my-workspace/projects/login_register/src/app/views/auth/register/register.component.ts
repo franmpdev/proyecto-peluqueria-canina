@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RegisterService } from '../../service/register.service';
-import { ClienteDatosDto } from '../../model/ClienteDatosDto';
 import { RouterModule, Router } from '@angular/router';
-import { ClienteService } from '../../service/cliente.service';
+import { ClienteDatosDto } from '../../../model/ClienteDatosDto';
+import { ClienteService } from '../../../service/cliente.service';
+import { RegisterService } from '../../../service/register.service';
+
 @Component({
   selector: 'app-register',
   imports: [FormsModule,CommonModule, RouterModule],
