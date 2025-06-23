@@ -23,37 +23,37 @@ export class CitaService {
   ){}
 
   // Devolucion de todas las citas
-async findAllCitas(): Promise<CitaDatosDto[]> {
-  const citas = await this.repositoryCita.find();
-  const citasDto: CitaDatosDto[] = [];
+  async findAllCitas(): Promise<CitaDatosDto[]> {
+    const citas = await this.repositoryCita.find();
+    const citasDto: CitaDatosDto[] = [];
 
-  for (const cita of citas) {
-    const cliente = await this.clienteService.findClienteByEmail(cita.email_cliente);
-    const clienteNombre = typeof cliente === 'object' && cliente !== null
-      ? cliente.nombre
-      : '';
-    const empleadoObj = await this.empleadosService.findEmpleadoByDni(cita.dni_empleado);
-    const empleadoNombre = typeof empleadoObj === 'object' && empleadoObj !== null
-      ? empleadoObj.nombre
-      : '';
-    const telefonoCliente = typeof cliente === 'object' && cliente !== null
-      ? cliente.telefono
-      : '';
-    const mascota = await this.mascotasService.findMascota(cita.id_mascota);
-    citasDto.push(
-      new CitaDatosDto(
-        cita,
-        clienteNombre, // Now always a string
-        telefonoCliente,
-        empleadoNombre, // Now always a string
-        mascota?.nombre ?? '',
-        mascota?.raza ?? ''
-      )
-    );
+    for (const cita of citas) {
+      const cliente = await this.clienteService.findClienteByEmail(cita.email_cliente);
+      const clienteNombre = typeof cliente === 'object' && cliente !== null
+        ? cliente.nombre
+        : '';
+      const empleadoObj = await this.empleadosService.findEmpleadoByDni(cita.dni_empleado);
+      const empleadoDni = typeof empleadoObj === 'object' && empleadoObj !== null
+        ? empleadoObj.dni // <-- Aquí asignamos el DNI, no el nombre
+        : '';
+      const telefonoCliente = typeof cliente === 'object' && cliente !== null
+        ? cliente.telefono
+        : '';
+      const mascota = await this.mascotasService.findMascota(cita.id_mascota);
+      citasDto.push(
+        new CitaDatosDto(
+          cita,
+          clienteNombre,
+          telefonoCliente,
+          empleadoDni, // <-- Aquí va el DNI del empleado
+          mascota?.nombre ?? '',
+          mascota?.raza ?? ''
+        )
+      );
+    }
+
+    return citasDto;
   }
-
-  return citasDto;
-}
 
   // Devover las citas de un cliente
   async findQuotesByClient(email: string): Promise<CitaDatosDto[]> {

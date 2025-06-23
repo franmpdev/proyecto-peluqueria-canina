@@ -18,9 +18,12 @@ export class GestionCitasComponent {
     this.citasService.obtenerCitas().subscribe({
       next: (citas) => {
         this.citas = citas;
+        console.log(citas)
         this.empleadosService.allEmpleados().subscribe({
           next: (empleados) => {
+            console.log(empleados)
             this.empleados = empleados;
+            this.asignarEmpleado()
           },
           error: () => {
           }
@@ -29,6 +32,7 @@ export class GestionCitasComponent {
       error: () => {
       }
     });
+
   }
   eliminarCita(id: number) {
     this.citasService.eliminarCita(id).subscribe({
@@ -40,5 +44,18 @@ export class GestionCitasComponent {
       }
     });
   }
-
+  asignarEmpleado() {
+    this.citas.forEach(cita => {
+      console.log('Buscando empleado para cita:', cita.dni_empleado);
+      const empleado = this.empleados.find(e => e.dni == cita.dni_empleado);
+      console.log('Empleado encontrado:', empleado);
+      if (empleado) {
+        cita.nombre_empleado = empleado.nombre;
+        cita.apellido_empleado = empleado.apellido;
+      } else {
+        cita.nombre_empleado = '';
+        cita.apellido_empleado = '';
+      }
+    });
+  }
 }
