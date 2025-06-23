@@ -13,8 +13,6 @@ import {Response} from 'express';
 import { CitaAltaEmpleadoDto } from 'src/dto/CitaAltaEmpleadoDto';
 import { CitaAltaClienteDto } from 'src/dto/CitaAltaClienteDto';
 import { CitaAltaDto } from 'src/dto/CitaAltaDto';
-
-
 @Controller('citas')
 export class CitaController {
   constructor(private readonly citaService: CitaService) {}
@@ -70,11 +68,3 @@ export class CitaController {
       };
     }
   }
-        
-
-
-
-
-
-
-

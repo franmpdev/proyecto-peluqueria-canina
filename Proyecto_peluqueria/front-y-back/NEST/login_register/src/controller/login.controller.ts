@@ -13,13 +13,10 @@ import {
 import { Response } from 'express';
 import { ClienteAltaDto } from 'src/dto/ClienteAltaDto';
 import { ClienteDatosDto } from 'src/dto/ClienteDatosDto';
-import { Cliente } from 'src/model/Cliente';
 import { ClienteService } from 'src/service/cliente.service';
-
 @Controller('login')
 export class LoginController {
   constructor(private readonly clienteService: ClienteService) {}
-
   @Post('create')
   async create(@Body() user: ClienteAltaDto, @Res() res: Response):Promise<Response> {
     const creado = await this.clienteService.highClient(user);
@@ -32,10 +29,8 @@ export class LoginController {
       });
     };
   }
-
   @Get(':email')
   async findOne(@Param('email') email: string, @Res() res: Response):Promise<Response> {
-
     var cliente: ClienteDatosDto|boolean = await this.clienteService.findOne(email);
     console.log(cliente);
     //comprobar que el cliente es Cliente
@@ -50,8 +45,6 @@ export class LoginController {
       );
       return res.status(200).json(clientedto);
     }
-    return res.status(404).json({ message: 'Cuenta no encontrada' });
-
+    return res.status(404).json({ message: 'Cuenta no encontrada' })
   }
-  
 }
