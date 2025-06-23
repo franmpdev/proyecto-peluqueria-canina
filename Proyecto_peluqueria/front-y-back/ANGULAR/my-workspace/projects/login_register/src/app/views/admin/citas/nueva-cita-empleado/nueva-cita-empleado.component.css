@@ -1,67 +1,106 @@
-form {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 28px 36px;
-  background: #f4f8fb;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.08);
+.nueva-cita-empleado-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image:
+    linear-gradient(120deg, rgba(255,78,122,0.18) 0%, rgba(255,200,150,0.12) 100%),
+    url('../../../../../assets/perroIndex.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.65;
+  z-index: 0;
+  filter: saturate(1.2) brightness(1.08) contrast(1.08);
 }
 
-div {
-  margin-bottom: 20px;
+.nueva-cita-empleado-content {
+  position: relative;
+  z-index: 1;
+  max-width: 540px;
+  margin: 64px auto;
+  padding: 36px 32px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.nueva-cita-empleado-title {
+  text-align: center;
+  color: #ff4e7a;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 label {
-  display: block;
-  margin-bottom: 7px;
-  font-weight: 600;
-  color: #1e40af;
-  letter-spacing: 0.5px;
+  font-weight: bold;
+  color: #555;
 }
 
 input[type="text"],
-input[type="email"],
 input[type="number"],
+input[type="email"],
 input[type="date"],
 input[type="time"],
 select {
   width: 100%;
-  padding: 9px 12px;
-  border: 1px solid #b6c6e3;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 1rem;
-  background: #fff;
-  transition: border 0.2s;
+  font-size: 16px;
+  background: #fff7fa;
+  transition: border-color 0.3s;
   box-sizing: border-box;
+  margin-bottom: 0;
 }
 
 input:focus,
 select:focus {
-  border-color: #2563eb;
+  border-color: #ff4e7a;
   outline: none;
-  background: #e0e7ff;
+  background: #fff0f6;
 }
 
-button[type="submit"] {
+.btn-submit {
   width: 100%;
-  padding: 12px 0;
-  background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
-  color: #fff;
+  background-color: #ff4e7a;
+  color: white;
+  padding: 12px;
   border: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.10);
+  box-shadow: 0 2px 8px rgba(255,78,122,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+  margin-top: 10px;
 }
-
-button[type="submit"]:hover:enabled {
-  background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
-  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.15);
-}
-
-button[disabled] {
-  background: #b6c6e3;
+.btn-submit:disabled {
+  background: #ffd6e3;
+  color: #fff;
   cursor: not-allowed;
+}
+.btn-submit:hover:enabled {
+  background-color: #e13c65;
+  box-shadow: 0 4px 16px rgba(255,78,122,0.13);
+}
+
+@media (max-width: 600px) {
+  .nueva-cita-empleado-content {
+    max-width: 98vw;
+    padding: 10px 2vw;
+  }
+  .nueva-cita-empleado-title {
+    font-size: 1.3rem;
+  }
 }

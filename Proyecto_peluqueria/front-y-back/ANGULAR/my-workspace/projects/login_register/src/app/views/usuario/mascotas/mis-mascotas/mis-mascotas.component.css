@@ -1,103 +1,183 @@
-.mis-mascotas-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 28px 36px;
-  background: #f4f8fb;
-  border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.08);
+.mis-mascotas-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image:
+    linear-gradient(120deg, rgba(255,78,122,0.18) 0%, rgba(255,200,150,0.12) 100%),
+    url('../../../../../assets/perroIndex.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.65;
+  z-index: 0;
+  filter: saturate(1.2) brightness(1.08) contrast(1.08);
 }
-h2 {
+
+.mis-mascotas-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 64px auto;
+  padding: 36px 28px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.mis-mascotas-title {
   text-align: center;
-  color: #1e40af;
-  margin-bottom: 24px;
+  color: #ff4e7a;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 28px;
   letter-spacing: 1px;
 }
+
+.mascota-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mascota-item {
+  background: rgba(255,255,255,0.70);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(255,78,122,0.07);
+  margin-bottom: 18px;
+  padding: 18px 14px 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Botón editar - amarillo */
+.btn-editar {
+  background: none;
+  color: #eab308;
+  border: 2px solid #eab308;
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 8px rgba(234,179,8,0.08);
+}
+.btn-editar:hover {
+  background: #eab308;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(234,179,8,0.13);
+}
+
+/* Botón eliminar - rosa oscuro */
+.btn-eliminar {
+  background: none;
+  border: 2px solid #e13c65;
+  color: #e13c65;
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 8px rgba(225,60,101,0.08);
+}
+.btn-eliminar:hover {
+  background: #e13c65;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(225,60,101,0.13);
+}
+
+/* Botón guardar - rosa */
+.btn-guardar {
+  background: none;
+  color: #ff4e7a;
+  border: 2px solid #ff4e7a;
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 8px rgba(255,78,122,0.08);
+}
+.btn-guardar:hover {
+  background: #ff4e7a;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255,78,122,0.13);
+}
+
+/* Botón cancelar - rosa oscuro */
+.btn-cancelar {
+  background: none;
+  border: 2px solid #e13c65;
+  color: #e13c65;
+  padding: 7px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 8px rgba(225,60,101,0.08);
+}
+.btn-cancelar:hover {
+  background: #e13c65;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(225,60,101,0.13);
+}
+
+.edicion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.edicion-form input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background: #fff7fa;
+  transition: border-color 0.3s;
+}
+
+.edicion-form input:focus {
+  border-color: #ff4e7a;
+  outline: none;
+  background: #fff0f6;
+}
+
 .mensaje-alerta {
   text-align: center;
-  color: #ef4444;
-  font-weight: 600;
+  color: #e13c65;
+  font-weight: bold;
   margin-bottom: 18px;
 }
+
 .mensaje-info {
   text-align: center;
   color: #64748b;
   font-size: 1.1rem;
-  margin-top: 40px;
+  margin-top: 32px;
+  font-weight: 500;
 }
-.mascota-lista {
-  list-style: none;
-  padding: 0;
-}
-.mascota-item {
-  background: #e0e7ff;
-  border-radius: 8px;
-  margin-bottom: 18px;
-  padding: 18px 16px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.06);
-}
-.acciones {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-.btn-editar,
-.btn-eliminar,
-.btn-guardar,
-.btn-cancelar {
-  padding: 7px 16px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.btn-editar {
-  background: #2563eb;
-  color: #fff;
-}
-.btn-editar:hover {
-  background: #1e40af;
-}
-.btn-eliminar {
-  background: #ef4444;
-  color: #fff;
-}
-.btn-eliminar:hover {
-  background: #b91c1c;
-}
-.btn-guardar {
-  background: #059669;
-  color: #fff;
-}
-.btn-guardar:hover {
-  background: #047857;
-}
-.btn-cancelar {
-  background: #64748b;
-  color: #fff;
-}
-.btn-cancelar:hover {
-  background: #334155;
-}
-.edicion-form {
-  margin-top: 14px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.edicion-form input {
-  padding: 7px 10px;
-  border: 1px solid #b6c6e3;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #fff;
-  transition: border 0.2s;
-}
-.edicion-form input:focus {
-  border-color: #2563eb;
-  outline: none;
-  background: #e0e7ff;
+
+@media (max-width: 700px) {
+  .mis-mascotas-content {
+    max-width: 98vw;
+    padding: 10px 2vw;
+  }
+  .mis-mascotas-title {
+    font-size: 1.3rem;
+  }
+  .mascota-item {
+    padding: 10px 4px 6px 4px;
+  }
 }

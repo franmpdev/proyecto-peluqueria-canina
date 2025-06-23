@@ -1,7 +1,8 @@
-<div class="form-container">
-  <h2>Registrar nueva mascota</h2>
+<div class="nueva-mascota-bg"></div>
+<div class="nueva-mascota-content">
+  <h2 class="nueva-mascota-title">Registrar nueva mascota</h2>
   <form (ngSubmit)="altaMascota()" #mascotaForm="ngForm">
-    <div>
+    <div class="form-group">
       <label for="nombreMascota">Nombre:</label>
       <input
         id="nombreMascota"
@@ -12,7 +13,7 @@
         placeholder="Nombre de la mascota"
       />
     </div>
-    <div>
+    <div class="form-group">
       <label for="razaMascota">Raza:</label>
       <input
         id="razaMascota"
@@ -23,7 +24,7 @@
         placeholder="Raza"
       />
     </div>
-    <div>
+    <div class="form-group">
       <label for="edadMascota">Edad:</label>
       <input
         id="edadMascota"
@@ -35,7 +36,7 @@
         placeholder="Edad"
       />
     </div>
-    <button type="submit" [disabled]="mascotaForm.invalid">Registrar Mascota</button>
+    <button class="btn-submit" type="submit" [disabled]="mascotaForm.invalid">Registrar Mascota</button>
   </form>
   <div *ngIf="mensajeAlta" class="mensaje">
     {{ mensajeAlta }}

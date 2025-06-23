@@ -17,16 +17,15 @@ export class ClienteService {
     this.cliente = cliente;
   }
   getCliente(): ClienteDatosDto | null {
-      if(!this.cliente){
-        return null;
-      } else if (localStorage.getItem('cliente') === null) {
-        return null;
-      } else{
-        this.cliente = JSON.parse(localStorage.getItem('cliente'));
-        return this.cliente;
-      }
+    if (this.cliente === null) {
+      this.cliente = JSON.parse(localStorage.getItem('cliente') || '{}')
+      return this.cliente;
+    } else {
+      return this.cliente;
     }
-    removeCliente():void{
-      this.cliente = null;
-    }
+  }
+
+  removeCliente():void{
+    this.cliente = null;
+  }
 }

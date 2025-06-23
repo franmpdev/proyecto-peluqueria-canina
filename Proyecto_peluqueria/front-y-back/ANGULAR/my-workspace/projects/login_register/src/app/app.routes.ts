@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { AuthComponent } from './views/auth/auth.component';
 import { LoginComponent } from './views/auth/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { MisMascotasComponent } from './views/usuario/mascotas/mis-mascotas/mis-mascotas.component';
 import { NuevaMascotaComponent } from './views/usuario/mascotas/nueva-mascota/nueva-mascota.component';
 import { GestionCitasComponent } from './views/admin/citas/gestion-citas/gestion-citas.component';
@@ -14,6 +13,7 @@ import { MascotasComponent } from './views/admin/mascotas/mascotas.component';
 import { NuevaCitaClienteComponent } from './views/usuario/citas/nueva-cita-cliente/nueva-cita-cliente.component';
 import { MisCitasComponent } from './views/usuario/citas/mis-citas/mis-citas.component';
 import { ProductosComponent } from './views/admin/productos/productos.component';
+import { RegisterComponent } from './views/auth/register/register.component';
 
 export const routes: Routes = [
   {

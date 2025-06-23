@@ -1,30 +1,58 @@
-/* Estilo general para centrar y estilizar el formulario */
-form, div.form-container {
+/* Estilos inspirados en home.component.css para login.component.css */
+
+.login-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image:
+    linear-gradient(120deg, rgba(255,78,122,0.25) 0%, rgba(255,200,150,0.18) 100%),
+    url('../../../../assets/perroIndex.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.65;
+  z-index: 0;
+  filter: saturate(1.2) brightness(1.08) contrast(1.08);
+}
+
+.login-content {
+  position: relative;
+  z-index: 1;
   max-width: 400px;
-  margin: 0 auto;
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 64px auto;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: rgba(255,255,255,0.85); /* Más opaco */
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
 }
-/* Títulos */
-h1 {
+
+
+.login-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+}
+
+.login-title {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-weight: 700;
+  color: #ff4e7a;
+  font-size: 2rem;
   text-align: center;
-  color: #333;
+  letter-spacing: 1px;
 }
-/* Estilo para etiquetas y entradas */
+
 label {
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
   color: #555;
 }
+
 input[type="text"],
 input[type="email"],
-input[type="password"],
-input[type="tel"] {
+input[type="password"] {
   width: 100%;
   padding: 10px 12px;
   margin-bottom: 20px;
@@ -33,45 +61,79 @@ input[type="tel"] {
   font-size: 16px;
   box-sizing: border-box;
   transition: border-color 0.3s;
+  background: #fff7fa;
 }
+
 input:focus {
-  border-color: #007BFF;
+  border-color: #ff4e7a;
   outline: none;
+  background: #fff0f6;
 }
-/* Botón principal */
+
 .btn-submit {
   width: 100%;
-  background-color: #007BFF;
+  background-color: #ff4e7a;
   color: white;
   padding: 12px;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255,78,122,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
 }
 .btn-submit:hover {
-  background-color: #0056b3;
+  background-color: #e13c65;
+  box-shadow: 0 4px 16px rgba(255,78,122,0.13);
 }
-/* Botón secundario */
-button:not(.btn-submit) {
-  margin-top: 10px;
-  background-color: transparent;
-  color: #007BFF;
-  border: none;
+
+.login-message {
+  text-align: center;
+  color: #e13c65;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.registrate-btn {
+  display: block;
+  margin: 18px auto 0 auto;
+  background: none;
+  color: #ff4e7a;
+  border: 2px solid #ff4e7a;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 15px;
-  text-decoration: underline;
-}
-p {
-  text-align: center;
-  color: #666;
-  margin: 15px 0 5px;
-}
-.center-button {
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  box-shadow: 0 2px 8px rgba(255,78,122,0.08);
   text-align: center;
 }
-.center-button button {
-  display: inline-block;
+
+.registrate-btn:hover {
+  background: #ff4e7a;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255,78,122,0.13);
+}
+@media (max-width: 600px) {
+  .login-content {
+    max-width: 98vw;
+    padding: 10px 2vw;
+  }
+  .login-card {
+    padding: 18px 8px;
+  }
+  .login-title {
+    font-size: 1.3rem;
+  }
+}
+.login-register-text {
+  text-align: center;
+  color: #64748b;
+  margin: 18px 0 0;
   font-size: 15px;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  letter-spacing: 0.5px;
 }
