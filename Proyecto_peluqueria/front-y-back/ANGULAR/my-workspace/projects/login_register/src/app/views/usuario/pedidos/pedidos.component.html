@@ -1,1 +1,31 @@
-<p>pedidos works!</p>
+<div class="pedidos-bg"></div>
+<div class="pedidos-content">
+  <h2 class="pedidos-title">Mis pedidos</h2>
+  <div *ngIf="pedidos.length === 0" class="pedidos-empty">
+    No tienes pedidos realizados.
+  </div>
+  <div *ngIf="pedidos.length > 0">
+    <table class="pedidos-table">
+      <thead>
+        <tr>
+          <th>ID Pedido</th>
+          <th>Fecha</th>
+          <th>Productos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.id_pedido }}</td>
+          <td>{{ pedido.fecha | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let pp of pedido.pedidoproductos">
+                {{ pp.producto.nombre }} (x{{ pp.cantidad }})
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

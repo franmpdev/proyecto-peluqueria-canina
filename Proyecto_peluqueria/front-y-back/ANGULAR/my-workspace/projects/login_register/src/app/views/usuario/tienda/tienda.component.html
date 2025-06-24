@@ -11,15 +11,12 @@
       <span *ngIf="producto.stock <= 0" class="agotado">Agotado</span>
     </div>
   </div>
-
   <div class="carrito">
     <h2>Carrito</h2>
     <div *ngIf="carrito.length === 0">El carrito está vacío.</div>
-
     <div *ngFor="let producto of carrito">
       <div class="carrito-item">
         <span>{{ producto.nombre }}</span>
-
         <button (click)="restarAlPedido(producto.id_producto)">-</button>
         <span>{{ obtenerCantidad(producto.id_producto) }}</span>
         <button

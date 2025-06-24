@@ -32,7 +32,6 @@ export class LoginController {
   @Get(':email')
   async findOne(@Param('email') email: string, @Res() res: Response):Promise<Response> {
     var cliente: ClienteDatosDto|boolean = await this.clienteService.findOne(email);
-    console.log(cliente);
     //comprobar que el cliente es Cliente
     if (cliente instanceof ClienteDatosDto) {
     // Asegúrate que ClienteDatosDto tiene constructor o crea un objeto simple

@@ -27,7 +27,6 @@ export class ClienteService {
         return new ClienteDatosDto(cliente.email, cliente.nombre, cliente.apellido, cliente.telefono);
       }
       else{
-        console.log('Cliente existente: ', clienteRepetido);
         if(!clienteRepetido.password && nuevo.password){
           // Si el cliente ya existe, verifica si tiene contraseña, y si no tiene, la añade
           let creado = this.repositoryUsuario.create(new UserAltaDto(nuevo.email, nuevo.password, 'cliente'));
@@ -65,7 +64,6 @@ export class ClienteService {
       //devolver el cliente actualizado
       if(result.affected > 0) {
         const usuario = await this.repositoryCliente.findOneBy({ email });  
-        console.log('Cliente modificado: ', usuario);
         return new ClienteDatosDto(usuario.email, usuario.nombre, usuario.apellido, usuario.telefono, usuario.password);
       }
 

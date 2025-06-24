@@ -1,142 +1,258 @@
 .tienda-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: space-between;
-  padding: 2rem;
-  background: #f7f7fa;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 2vw;
+  background: linear-gradient(120deg, #e0f7fa 60%, #ffe082 100%);
   min-height: 100vh;
+  animation: fadeIn 1.2s;
 }
 
 .productos {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 2.5rem;
   flex: 2;
+  justify-content: flex-start;
 }
 
 .card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  padding: 1.5rem;
-  width: 240px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0,191,165,0.13), 0 2px 8px 0 rgba(0,0,0,0.08);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  width: 260px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform .2s;
+  transition: transform .22s, box-shadow .22s;
+  border: 2px solid #b2ebf2;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,rgba(0,191,165,0.08),rgba(255,224,130,0.07));
+  z-index: 0;
+  pointer-events: none;
 }
 .card:hover {
-  transform: translateY(-5px) scale(1.03);
+  transform: translateY(-10px) scale(1.04) rotate(-1deg);
+  box-shadow: 0 16px 48px 0 rgba(0,191,165,0.18), 0 4px 18px 0 rgba(0,0,0,0.13);
+  border-color: #ffd54f;
 }
 .card img {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0,191,165,0.10);
+  background: #fff;
+  z-index: 1;
 }
 .card h2 {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+  font-size: 1.25rem;
+  margin: 0.5rem 0 0.2rem 0;
+  color: #00bfa5;
+  font-weight: 700;
+  text-align: center;
+  z-index: 1;
 }
 .card .precio {
   font-weight: bold;
-  color: #2e7d32;
-  margin: 0.5rem 0;
+  color: #fbc02d;
+  margin: 0.5rem 0 0.2rem 0;
+  font-size: 1.15rem;
+  z-index: 1;
 }
 .card button {
-  background: #1976d2;
+  background: linear-gradient(90deg,#00bfa5 0%,#ffd54f 100%);
   color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 0.5rem;
-  transition: background .2s;
+  margin-top: 0.7rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  box-shadow: 0 1px 6px 0 rgba(0,191,165,0.10);
+  transition: background .2s, transform .15s;
+  z-index: 1;
+}
+.card button:hover:not(:disabled) {
+  background: linear-gradient(90deg,#ffd54f 0%,#00bfa5 100%);
+  transform: scale(1.06);
 }
 .card button:disabled {
-  background: #ccc;
+  background: #e0e0e0;
+  color: #aaa;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 .card .agotado {
   color: #d32f2f;
   font-weight: bold;
-  margin-top: 0.5rem;
+  margin-top: 0.7rem;
+  font-size: 1.08rem;
+  z-index: 1;
+}
+.card .stock-info {
+  color: #888;
+  font-size: 0.98rem;
+  margin-top: 0.2rem;
+  z-index: 1;
 }
 
 .carrito {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  padding: 1.5rem;
-  width: 350px;
-  min-height: 300px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0,191,165,0.13), 0 2px 8px 0 rgba(0,0,0,0.08);
+  padding: 2rem 1.5rem;
+  width: 370px;
+  min-height: 320px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
+  border: 2px solid #b2ebf2;
+  position: sticky;
+  top: 40px;
+  animation: fadeIn 1.2s;
 }
 .carrito h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  color: #00bfa5;
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 1px;
 }
 
 .carrito-item{
   width: 100%;
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: 0.7rem;
+  margin-bottom: 0.7rem;
+  align-items: center;
+  background: rgba(0,191,165,0.04);
+  border-radius: 8px;
+  padding: 0.5rem 0.4rem;
+  font-size: 1.05rem;
 }
 .carrito-item > span:first-child{
   padding-left: 1rem;
   flex: 1;
+  color: #444;
+  font-weight: 600;
 }
 .carrito-item button {
-  background: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 0.2rem 0.7rem;
-  cursor: pointer;
-  font-size: 1rem;
-}
-.carrito-item .eliminar {
-  background: #d32f2f;
-}
-.total {
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-top: 1rem;
-}
-.pagar {
-  background: #43a047;
+  background: #00bfa5;
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 0.7rem 1.5rem;
-  font-size: 1.1rem;
+  padding: 0.25rem 0.8rem;
   cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: background .2s, transform .15s;
+}
+.carrito-item button:hover {
+  background: #ffd54f;
+  color: #00bfa5;
+  transform: scale(1.1);
+}
+.carrito-item .eliminar {
+  background: #d32f2f;
+  color: #fff;
+}
+.carrito-item .eliminar:hover {
+  background: #ffd54f;
+  color: #d32f2f;
+}
+.total {
+  font-weight: bold;
+  font-size: 1.18rem;
   margin-top: 1rem;
-  transition: background .2s;
+  color: #fbc02d;
+  letter-spacing: 1px;
+}
+.pagar {
+  background: linear-gradient(90deg,#fbc02d 0%,#fff9c4 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.7rem;
+  font-size: 1.13rem;
+  cursor: pointer;
+  margin-top: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 1px 6px 0 rgba(251,192,45,0.10);
+  transition: background .2s, transform .15s;
 }
 .pagar:hover {
-  background: #388e3c;
+  background: linear-gradient(90deg,#fff9c4 0%,#fbc02d 100%);
+  color: #00bfa5;
+  transform: scale(1.04);
 }
 .exito {
-  background: #e8f5e9;
-  color: #388e3c;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-top: 1rem;
+  background: #e0f2f1;
+  color: #00bfa5;
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin-top: 1.2rem;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   font-weight: bold;
   animation: fadeIn 1s;
+  border: 1.5px solid #00bfa5;
+  box-shadow: 0 2px 12px 0 rgba(0,191,165,0.08);
 }
 .stock-info{
   min-width: 8ch;
+  color: #888;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 1200px) {
+  .tienda-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  .carrito {
+    width: 98vw;
+    max-width: 400px;
+    margin: 0 auto;
+    position: static;
+  }
+  .productos {
+    justify-content: center;
+  }
+}
+@media (max-width: 700px) {
+  .tienda-container {
+    padding: 1rem 0.5vw;
+  }
+  .productos {
+    gap: 1.2rem;
+  }
+  .card {
+    width: 98vw;
+    max-width: 320px;
+    padding: 1.2rem 0.7rem;
+  }
+  .carrito {
+    padding: 1.2rem 0.7rem;
+    min-width: 0;
+    width: 98vw;
+    max-width: 98vw;
+  }
 }
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: translateY(0);}
 }

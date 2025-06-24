@@ -56,7 +56,7 @@ export class TiendaService {
   for (const linea of dto.productos) {
     const pp = this.pedidoProductoRepo.create({
       pedido:   guardado,
-      producto: { id: linea.id_producto } as any,
+      producto: { id: linea.id_producto } as Producto,
       cantidad: linea.cantidad,
     });
     await this.pedidoProductoRepo.save(pp);
