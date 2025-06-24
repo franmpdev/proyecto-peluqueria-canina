@@ -25,7 +25,6 @@ export class MisMascotasComponent {
   }
 
   obtenerMascotasPorEmail() {
-    console.log(this.clienteService.getCliente().email)
     this.mascotaService.getMascotasPorEmail(this.clienteService.getCliente().email).subscribe({
       next: (mascotas) => {
         this.mascotas = mascotas;

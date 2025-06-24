@@ -21,11 +21,9 @@ export class LoginComponent {
       next: (usuario: UserDatosDto) => {
         if (usuario) {
           localStorage.setItem('user', JSON.stringify(usuario))
-          console.log(JSON.parse(localStorage.getItem('user')))
           if(usuario.role === 'empleado'){
             this.empleadoService.getEmpleadoByEmail(usuario.email).subscribe({
               next: (empleado) => {
-                console.log('Empleado encontrado:', empleado);
                 this.empleadoService.setEmpleado(empleado);
                 localStorage.setItem('empleado', JSON.stringify(empleado));
                 this.router.navigate(['/home']);
@@ -36,7 +34,6 @@ export class LoginComponent {
             this.clienteService.findUsu(usuario.email).subscribe({
               next: (cliente) => {
                 localStorage.setItem('cliente', JSON.stringify(cliente));
-                console.log('Cliente encontrado:', cliente);
                 this.clienteService.setCliente(cliente);
                 localStorage.setItem('cliente', JSON.stringify(cliente));
                 this.router.navigate(['/home']);
@@ -44,12 +41,8 @@ export class LoginComponent {
             });
           }
         }
-        else{
-          console.error('Usuario no encontrado');
-        }
       },
-      error: (error) => {
-        console.error('Error al iniciar sesión:', error);
+      error: () => {
       }
     })
   }

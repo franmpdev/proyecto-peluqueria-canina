@@ -17,7 +17,6 @@ export class MisCitasComponent  {
     let email = JSON.parse(localStorage.getItem('cliente') || '{}').email;
     this.citasService.getMisCitas(email).subscribe(citas => {
       this.citas = citas;
-      console.log('Citas obtenidas:', this.citas);
       this.citas.forEach(cita => {
         this.empleadoService.getEmpleadoPorDni(cita.dni_empleado).subscribe(empleado => {
           cita.nombre_empleado = empleado.nombre;
@@ -30,7 +29,6 @@ export class MisCitasComponent  {
   eliminarCita(id: number) {
     this.citasService.eliminarCita(id).subscribe({
       next: () => {
-        console.log('Cita eliminada correctamente');
         this.citas = this.citas.filter(c => c.id_cita !== id);
       },
       error: (error) => {

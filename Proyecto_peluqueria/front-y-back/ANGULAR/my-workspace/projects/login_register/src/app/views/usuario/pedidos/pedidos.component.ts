@@ -20,7 +20,6 @@ export class PedidosComponent {
     this.tiendaService.obtenerPedidos(JSON.parse(localStorage.getItem('user')).email).subscribe({
       next: (data) => {
         this.pedidos = data;
-        console.log(this.pedidos)
       },
       error: (error) => {
 

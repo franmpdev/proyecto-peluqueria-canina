@@ -15,18 +15,15 @@ export class MisEmpleadosComponent {
   constructor(private empleadosService: EmpleadoService) {}
   ngOnInit() {
     this.empleadosService.allEmpleados().subscribe(empleados => {
-      console.log('Empleados:', empleados);
       this.empleados = empleados;
     });
   }
   eliminarEmpleado(dni: string) {
     this.empleadosService.deleteEmpleado(dni).subscribe({
       next: () => {
-        console.log(`Empleado con DNI ${dni} eliminado correctamente.`);
         this.empleados = this.empleados.filter(empleado => empleado.dni !== dni);
       },
-      error: (error) => {
-        console.error(`Error al eliminar el empleado con DNI ${dni}:`, error);
+      error: (r) => {
       }
     });
   }

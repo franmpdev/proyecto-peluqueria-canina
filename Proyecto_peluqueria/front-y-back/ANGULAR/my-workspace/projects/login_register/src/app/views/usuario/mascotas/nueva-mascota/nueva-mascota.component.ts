@@ -21,14 +21,12 @@ export class NuevaMascotaComponent {
   constructor(private mascotaService:MascotaService, private clienteService: ClienteService){}
   ngOnInit() {
     this.email_clienteMascota = this.clienteService.getCliente().email;
-    console.log(this.email_clienteMascota);
   }
   altaMascota() {
     let nuevaMascota = new MascotaAltaDto(this.email_clienteMascota, this.nombreMascota, this.razaMascota, this.edadMascota);
     this.mascotaService.altaMascota(nuevaMascota)
    .subscribe({
       next: mascota => {
-      console.log('Mascota creada correctamente:', mascota)
     },
       error: err => {
         this.mensajeAlta = 'Error al crear la mascota.';

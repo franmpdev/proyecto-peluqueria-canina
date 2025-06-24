@@ -5,6 +5,9 @@ import { RouterModule, Router } from '@angular/router';
 import { ClienteDatosDto } from '../../../model/ClienteDatosDto';
 import { ClienteService } from '../../../service/cliente.service';
 import { RegisterService } from '../../../service/register.service';
+import { UserService } from '../../../service/user.service';
+import { UserAltaDto } from '../../../model/UserAltaDto';
+
 
 @Component({
   selector: 'app-register',
@@ -18,7 +21,7 @@ export class RegisterComponent {
   apellido: string = '';
   password: string = '';
   telefono: string = '';
-  constructor(private registerService:RegisterService, private clienteService: ClienteService  ,private router: Router){}
+  constructor(private registerService:RegisterService, private clienteService: ClienteService, private router: Router, private userService: UserService){}
   registrarCliente() {
     this.registerService.registerCliente(
       this.email,
@@ -29,14 +32,14 @@ export class RegisterComponent {
     ).subscribe({
       next: (cliente: ClienteDatosDto) => {
         // Maneja el éxito (puedes mostrar un mensaje o redirigir)
-        console.log('Cliente registrado:', cliente);
         localStorage.setItem('cliente', JSON.stringify(cliente))
         localStorage.setItem('user', JSON.stringify(cliente))
         this.clienteService.setCliente(cliente);
-      },
-      error: (error) => {
-        // Maneja el error
-        console.error('Error al registrar cliente:', error);
+        this.userService.createUser(new UserAltaDto(cliente.email, this.password, 'cliente')).subscribe({
+          next: (user)=>{
+            this.router.navigate(['/home']);
+          }
+        })
       }
     });
   }

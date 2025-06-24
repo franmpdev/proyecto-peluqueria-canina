@@ -28,7 +28,6 @@ export class MascotaService {
       mascota.raza,
       mascota.edad,
     ));
-    console.log(mascotasDto);
     return mascotasDto;
   }
   
@@ -42,7 +41,6 @@ export class MascotaService {
       mascota.raza,
       mascota.edad,
     ));
-    console.log(mascotasDto);
     return mascotasDto;
   }
   //BUSCAR MASCOTA POR EMAIL DE CLIENTE Y NOMBRE
