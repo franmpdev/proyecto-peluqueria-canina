@@ -11,24 +11,25 @@ export class Producto {
 
   @Column('text')
   descripcion: string;
+
   @Column()
   precio: number;
-  @Column()
+
+  @Column() 
   id_categoria: number;
+
   @Column()
   stock: number;
+
   @ManyToOne(() => Categoria, (categoria) => categoria.productos)
-  @JoinColumn({ name: 'id_categoria' }) // Asegúrate que esto coincida con el nombre real en la DB
+  @JoinColumn({ name: 'id_categoria' })  
   categoria: Categoria;
 
-  constructor(nombre?: string, descripcion?: string, precio?: number, stock?: number, categoria?: Categoria) {
+  /* Constructor con los mismos parámetros que tenías */
+  constructor(nombre?: string, descripcion?: string, precio?: number, stock?: number) {
     this.nombre = nombre;
     this.descripcion = descripcion;
     this.precio = precio;
     this.stock = stock;
-    this.categoria = categoria;
-    if(categoria){
-      this.id_categoria = categoria.id_categoria;
-    }
   }
 }
