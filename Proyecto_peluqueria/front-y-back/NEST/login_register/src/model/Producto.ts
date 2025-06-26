@@ -11,9 +11,10 @@ export class Producto {
 
   @Column('text')
   descripcion: string;
-
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column()
   precio: number;
+  @Column()
+  id_categoria: number;
   @Column()
   stock: number;
   @ManyToOne(() => Categoria, (categoria) => categoria.productos)
@@ -26,5 +27,8 @@ export class Producto {
     this.precio = precio;
     this.stock = stock;
     this.categoria = categoria;
+    if(categoria){
+      this.id_categoria = categoria.id_categoria;
+    }
   }
 }

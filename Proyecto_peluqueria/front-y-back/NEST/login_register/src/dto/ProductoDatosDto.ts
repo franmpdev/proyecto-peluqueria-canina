@@ -4,8 +4,8 @@ export class ProductoDatosDto {
   id_producto: number;
   nombre: string;
   descripcion: string;
-  id_categoria:number;
   precio: number;
+  id_categoria:number;
   stock: number;
 
   constructor(id_producto?: number, nombre?: string, descripcion?: string, precio?: number, id_categoria?: number, stock?: number) {

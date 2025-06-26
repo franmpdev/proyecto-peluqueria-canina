@@ -97,9 +97,10 @@ export class ProductosService {
           prods.id,
           prods.nombre,
           prods.descripcion,
-          prods.categoria.id_categoria,
           prods.precio,
-          prods.stock
+          prods.categoria.id_categoria,
+          prods.stock,
+
         )
       );
     }

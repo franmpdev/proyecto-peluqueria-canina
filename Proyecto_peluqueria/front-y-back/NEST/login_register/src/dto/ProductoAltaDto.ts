@@ -11,23 +11,25 @@ export class ProductoAltaDto {
   precio: number;
 
   @IsNumber()
+  id_categoria: number;
+  
+  @IsNumber()
   @Min(0)
   stock: number;
 
-  @IsNumber()
-  id_categoria: number;
+
 
   constructor(
     nombre: string,
     descripcion: string,
     precio: number,
+    id_categoria: number,
     stock: number,
-    id_categoria: number
   ) {
     this.nombre = nombre;
     this.descripcion = descripcion;
     this.precio = precio;
-    this.stock = stock;
     this.id_categoria = id_categoria;
+    this.stock = stock;
   }
 }
