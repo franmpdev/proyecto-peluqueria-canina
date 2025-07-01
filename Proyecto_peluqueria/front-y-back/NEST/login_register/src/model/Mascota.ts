@@ -26,11 +26,13 @@ export class Mascota {
   @OneToMany(() => Cita, cita => cita.mascota)
   citas: Cita[];
 
-  constructor(email_cliente: string, nombre: string, raza: string, edad: number) {
-    this.email_cliente = email_cliente;
+  constructor(cliente?: Cliente, citas?: Cita[], nombre?: string, raza?: string, edad?: number) {
+    this.cliente = cliente;
+    this.email_cliente = cliente?.email;
     this.nombre = nombre;
     this.raza = raza;
     this.edad = edad;
+    this.citas = citas;
     
   }
 }

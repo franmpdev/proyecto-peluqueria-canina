@@ -39,7 +39,7 @@ export class CitaService {
       const telefonoCliente = typeof cliente === 'object' && cliente !== null
         ? cliente.telefono
         : '';
-      const mascota = await this.mascotasService.findMascota(cita.id_mascota);
+      const mascota = await this.mascotasService.getMascotaPorId(cita.id_mascota);
       citasDto.push(
         new CitaDatosDto(
           cita,
@@ -83,7 +83,7 @@ export class CitaService {
       const fechaStr = cita.fecha instanceof Date
       ? cita.fecha.toISOString().slice(0, 10)
       : cita.fecha;
-      let mascota = await this.mascotasService.findMascota(cita.id_mascota);
+      let mascota = await this.mascotasService.getMascotaPorId(cita.id_mascota);
       //Se verifica si ya hay una cita registrada en la misma fecha y hora
       const citaRepetida = await this.repositoryCita.createQueryBuilder("citas")
       .where("citas.fecha = :fecha AND citas.hora = :hora", { 
@@ -108,7 +108,7 @@ export class CitaService {
         )
       } 
 }
-async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | boolean> {
+async highQuoteByEmployee(cita: CitaAltaEmpleadoDto): Promise<CitaDatosDto | false> {
   try {
     // Formatea la fecha para comparación (solo yyyy-mm-dd)
     const fechaStr = cita.fecha instanceof Date

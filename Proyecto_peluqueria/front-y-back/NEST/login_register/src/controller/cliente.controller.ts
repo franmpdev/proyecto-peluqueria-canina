@@ -14,6 +14,23 @@ import { Response } from 'express';
 @Controller('clientes')
 export class ClienteController {
   constructor(private readonly clienteService: ClienteService) {}
+
+  @Get('todos')
+  async allCLientes(){
+    return await this.clienteService.allClientes();
+  }
+  @Get('findByEmail/:email')
+  async findByEmail(@Param('email') email: string,@Res() res: Response){
+    const cliente = await this.clienteService.findClienteByEmail(email);
+    if (!cliente) {
+      return res
+        .status(404)
+        .json({ statusCode: 404, message: `Cliente con email "${email}" no encontrado` });
+    }
+    return res
+      .status(200)
+      .json(cliente);
+  }
   @Post('altaCliente')
   async altaCliente(@Body()cliente:ClienteAltaDto, @Res() res:Response){
     const alta = await this.clienteService.highClient(cliente);
@@ -22,29 +39,8 @@ export class ClienteController {
         massage: "Se dio de alta al cliente"
       });
     }else{
-      return res.status(499).json({
+      return res.status(404).json({
         massage: "No de dio de alta al cliente"
-      });
-    }
-  }
-  @Get('clientes')
-  async allCLientes(){
-    return await this.clienteService.allClientes();
-  }
-  @Get('cliente/:email')
-  async findByOne(@Param('email')email:string){
-    return await this.clienteService.findOne(email);
-  }
-  @Delete('borrarCliente/:email')
-  async deleteCliente(@Param('email') email:string, @Res() res:Response){
-    const delet = await this.clienteService.deleteClient(email);
-    if(delet){
-      return res.status(201).json({
-        massage: "Se borro correctamente"
-      });
-    }else{
-      return res.status(499).json({
-        massage: "No se pudo borrar correctamente"
       });
     }
   }
@@ -55,7 +51,7 @@ export class ClienteController {
         massage: "Se modifico correctamente"
       });
     }else{
-      return res.status(499).json({
+      return res.status(404).json({
         massage: "No se pudo modificar correctamente"
       });
     }

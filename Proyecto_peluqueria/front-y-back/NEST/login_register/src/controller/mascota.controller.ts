@@ -41,9 +41,9 @@ export class MascotaController {
   }
     @Get('buscarMascota/:id')
   async mascotaPorId(@Param('id') id: number, @Res()res :Response){
-    const mascotas = await this.mascotaService.getMascotasPorId(id);
-    if(mascotas.length>0){
-      return res.status(200).json(mascotas);
+    const mascota = await this.mascotaService.getMascotaPorId(id);
+    if(mascota){
+      return res.status(200).json(mascota);
     }else{
       return res.status(404).json({
         message: "No se encontro la mascota"

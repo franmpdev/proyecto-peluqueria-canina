@@ -35,16 +35,14 @@ export class Cliente {
   mascotas: Mascota[];
 
   constructor(
-    email?: string,
-    nombre?: string,
-    apellido?: string,
-    password?: string,
-    telefono?: string
+    email?: string, nombre?: string, apellido?: string, password?: string, telefono?: string, mascotas?: Mascota[], citas?: Cita[]
   ) {
-    this.email = email ?? '';
-    this.nombre = nombre ?? '';
-    this.apellido = apellido ?? '';
-    this.password = password ?? '';
-    this.telefono = telefono ?? '';
+    this.email = email;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.password = password;
+    this.telefono = telefono;
+    this.mascotas = mascotas;
+    this.citas = citas;
   }
 }

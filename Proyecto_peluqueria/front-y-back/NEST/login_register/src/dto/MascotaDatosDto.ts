@@ -1,15 +1,18 @@
-import { IsEmail, IsInt, IsString, Length } from "class-validator";
+import { Cita } from "src/model/Cita";
+import { Cliente } from "src/model/Cliente";
 
 export class MascotaDatosDto {
   id_mascota?: number;
   nombre: string;
   raza: string;
   edad: number;
-  email_cliente: string;
+  cliente: Cliente;
+  citas: Cita[];
 
-  constructor(id_mascota: number, email_cliente: string, nombre: string, raza: string, edad: number) {
+  constructor(id_mascota: number, cliente: Cliente, citas: Cita[], nombre: string, raza: string, edad: number) {
     this.id_mascota = id_mascota;
-    this.email_cliente = email_cliente;
+    this.cliente = cliente;
+    this.citas = citas;
     this.nombre = nombre;
     this.raza = raza;
     this.edad = edad;

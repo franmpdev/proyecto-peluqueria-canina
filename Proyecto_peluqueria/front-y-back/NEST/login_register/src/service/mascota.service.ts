@@ -16,27 +16,34 @@ export class MascotaService {
 
   // BUSCAR MASCOTA
 
-  async findMascota(id: number): Promise<Mascota> {
-    return this.repositoryMascota.findOne({ where: { id_mascota:id } });
-  }
-  async getMascotasPorId(id: number): Promise<MascotaDatosDto[]> {
-    const mascotas = this.repositoryMascota.find({ where: { id_mascota:id } });
-    const mascotasDto: MascotaDatosDto[] = (await mascotas).map(mascota => new MascotaDatosDto(
+  async getMascotaPorId(id: number): Promise<MascotaDatosDto> {
+    const mascota = await this.repositoryMascota.findOne({
+      where: { id_mascota: id },
+      relations: ['cliente', 'citas'],
+    });
+
+    if (!mascota) {
+      return null;
+    }
+
+    return new MascotaDatosDto(
       mascota.id_mascota,
-      mascota.email_cliente,
+      mascota.cliente,
+      mascota.citas,
       mascota.nombre,
       mascota.raza,
       mascota.edad,
-    ));
-    return mascotasDto;
+    );
   }
   
   //BUSCAR MASCOTAS POR EMAIL DE CLIENTE
   async getMascotasPorEmail(email: string): Promise<MascotaDatosDto[]> {
-    const mascotas = this.repositoryMascota.find({ where: { email_cliente:email } });
+    const mascotas = this.repositoryMascota.find({ where: { email_cliente:email },
+    relations: ['cliente', 'citas'] });
     const mascotasDto: MascotaDatosDto[] = (await mascotas).map(mascota => new MascotaDatosDto(
       mascota.id_mascota,
-      mascota.email_cliente,
+      mascota.cliente,
+      mascota.citas,
       mascota.nombre,
       mascota.raza,
       mascota.edad,
@@ -45,11 +52,13 @@ export class MascotaService {
   }
   //BUSCAR MASCOTA POR EMAIL DE CLIENTE Y NOMBRE
   async findMascotaByEmailAndName(email: string, nombre: string): Promise<MascotaDatosDto | boolean> {
-    const mascota = await this.repositoryMascota.findOne({ where: { email_cliente:email, nombre:nombre } });
+    const mascota = await this.repositoryMascota.findOne({ where: { email_cliente:email, nombre:nombre },
+    relations: ['cliente', 'citas'] });
     if(mascota){
       return new MascotaDatosDto(
         mascota.id_mascota,
-        mascota.email_cliente,
+        mascota.cliente,
+        mascota.citas,
         mascota.nombre,
         mascota.raza,
         mascota.edad
