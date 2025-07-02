@@ -12,11 +12,10 @@ export class ClienteDatosDto {
   citas: Cita[];
 
 
-  constructor(email: string, nombre: string, apellido: string, telefono: string, password?:string, mascotas?: Mascota[], citas?: Cita[]) {
+  constructor(email: string, nombre: string, apellido: string, telefono: string, mascotas?: Mascota[], citas?: Cita[]) {
     this.email = email;
     this.nombre = nombre;
     this.apellido = apellido;
-    this.password = password;
     this.telefono = telefono;
     this.mascotas = mascotas;
     this.citas = citas;

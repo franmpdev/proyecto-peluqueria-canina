@@ -11,13 +11,12 @@ import { Repository } from 'typeorm';
 export class ClienteService {
   
   constructor(
-    @InjectRepository(Cliente) private repositoryCliente: Repository<Cliente>,
-    @InjectRepository(Usuario) private repositoryUsuario: Repository<Usuario>
+    @InjectRepository(Cliente) private repositoryCliente: Repository<Cliente>
   ){}
   
   // ALTA CLIENTE
 
-    async highClient(nuevo: ClienteAltaDto): Promise<ClienteDatosDto | false> {
+  async highClient(nuevo: ClienteAltaDto): Promise<ClienteDatosDto | false> {
     const existente = await this.repositoryCliente.findOne({
       where: { email: nuevo.email }
     });
@@ -32,23 +31,6 @@ export class ClienteService {
         cliente.telefono
       );
     }
-
-    if (!existente.password && nuevo.password) {
-      const usuario = this.repositoryUsuario.create(
-        new UserAltaDto(nuevo.email, nuevo.password, 'cliente')
-      );
-      await this.repositoryUsuario.save(usuario);
-      // Reutilizamos un método de actualización simple:
-      existente.password = nuevo.password;
-      const actualizado = await this.repositoryCliente.save(existente);
-      return new ClienteDatosDto(
-        actualizado.email,
-        actualizado.nombre,
-        actualizado.apellido,
-        actualizado.telefono
-      );
-    }
-
     return false;
   }
 
@@ -69,14 +51,15 @@ export class ClienteService {
   
   //MODIFICAR CLIENTE
 
-    async modifyClient(email:string, clienteModificado :ClienteAltaDto):Promise<ClienteDatosDto | boolean> {
+    async modifyClient(email:string, clienteModificado :ClienteAltaDto):Promise<ClienteDatosDto | false> {
       //otra alternativa
       const result = await this.repositoryCliente.update({ email: email }, { ...clienteModificado });
       //devolver el cliente actualizado
       if(result.affected > 0) {
-        const usuario = await this.repositoryCliente.findOneBy({ email });  
-        return new ClienteDatosDto(usuario.email, usuario.nombre, usuario.apellido, usuario.telefono, usuario.password);
+        const cliente = await this.repositoryCliente.findOneBy({ email });  
+        return new ClienteDatosDto(cliente.email, cliente.nombre, cliente.apellido, cliente.telefono);
       }
+      return false;
 
     }
 
@@ -97,7 +80,6 @@ export class ClienteService {
       cliente.nombre,
       cliente.apellido,
       cliente.telefono,
-      cliente.password,
       cliente.mascotas,
       cliente.citas
     );
@@ -114,8 +96,7 @@ export class ClienteService {
       c.email,
       c.nombre,
       c.apellido,
-      c.telefono,
-      c.password,    
+      c.telefono, 
       c.mascotas,    
       c.citas        
     ));

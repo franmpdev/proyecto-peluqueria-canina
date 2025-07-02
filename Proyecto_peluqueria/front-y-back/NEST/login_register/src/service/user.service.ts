@@ -23,9 +23,15 @@ export class UserService {
     }
     return null;
   }
+  async update(id: number, user: UserAltaDto): Promise<UserDatosDto> {
+    await this.userRepository.update(id, user);
+    const updatedUser = await this.userRepository.findOne({ where: { id } });
+    return new UserDatosDto(updatedUser.id, updatedUser.email, updatedUser.role);
+  }
 
+  async remove(id: number): Promise<boolean> {
+    const result = await this.userRepository.delete(id);
+    return (result.affected) > 0;
 
-  async remove(id: number): Promise<void> {
-    await this.userRepository.delete(id);
   }
 }

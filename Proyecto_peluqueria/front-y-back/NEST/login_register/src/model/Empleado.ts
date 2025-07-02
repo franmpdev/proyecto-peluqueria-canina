@@ -39,7 +39,8 @@ export class Empleado {
     nombre?: string,
     apellido?: string,
     especialidad?: string,
-    telefono?: string
+    telefono?: string,
+    citas?: Cita[]
   ) {
     this.dni = dni ?? '';
     this.email = email ?? '';
@@ -48,5 +49,6 @@ export class Empleado {
     this.apellido = apellido ?? '';
     this.especialidad = especialidad ?? '';
     this.telefono = telefono ?? '';
+    this.citas = citas;
   }
 }

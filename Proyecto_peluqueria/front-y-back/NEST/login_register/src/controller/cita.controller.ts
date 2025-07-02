@@ -52,8 +52,8 @@ export class CitaController {
       }
     }
     @Patch('modificar-cita')
-    modificarCita(@Body() cita:CitaAltaDto, @Res() res:Response){
-      if(this.citaService.modifyQuote(cita)){
+    modificarCita(@Body()id: number, @Body() cita:CitaAltaDto,  @Res() res:Response){
+      if(this.citaService.modifyQuote(id, cita)){
         return res.status(200).json({message:"has modificado la cita con exito",});
       }
       return res.status(404).json({message:"no se encuentra la cita",});

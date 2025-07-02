@@ -19,7 +19,6 @@ import { CitaService } from './service/cita.service';
 import { EmpleadoService } from './service/empleado.service';
 import { ClienteService } from './service/cliente.service';
 import { MascotaService } from './service/mascota.service';
-import { LoginController } from './controller/login.controller';
 import { MascotaController } from './controller/mascota.controller';
 import { EmpleadoController } from './controller/empleado.controller';
 import { Usuario } from './model/Usuario';
@@ -41,7 +40,7 @@ import { ClienteController } from './controller/cliente.controller';
   entities: [Categoria, Usuario,Cita,Cliente,Empleado,Mascota,Pedido,PedidoProducto,Producto],
   synchronize: false,
   }),TypeOrmModule.forFeature([Categoria, Usuario,Cita,Cliente,Empleado,Mascota,Pedido,PedidoProducto,Producto])],
-  controllers: [ClienteController, MascotaController, CategoriaController, ProductoController,UserController,LoginController,CitaController,TiendaController,MascotaController,EmpleadoController],
+  controllers: [ClienteController, MascotaController, CategoriaController, ProductoController,UserController,CitaController,TiendaController,MascotaController,EmpleadoController],
   providers: [ClienteService, MascotaService,CategoriaService, ProductosService, UserService,TiendaService,CitaService,EmpleadoService,ClienteService,MascotaService],
 })
 export class AppModule {}

@@ -1,92 +1,98 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EmpleadoAltaDto } from 'src/dto/EmpeladoAltaDto';
-import { EmpleadoDatosDto } from 'src/dto/EmpleadoDatosDto';
-import { UserAltaDto } from 'src/dto/UserAltaDto';
+import { Repository } from 'typeorm';
+
 import { Empleado } from 'src/model/Empleado';
 import { Usuario } from 'src/model/Usuario';
-import { Repository } from 'typeorm';
+import { EmpleadoDatosDto } from 'src/dto/EmpleadoDatosDto';
+import { UserAltaDto } from 'src/dto/UserAltaDto';
+import { EmpleadoAltaDto } from 'src/dto/EmpeladoAltaDto';
 
 @Injectable()
 export class EmpleadoService {
-  
+  getEmployeesByEmail(email: string): Promise<EmpleadoDatosDto> {
+    throw new Error('Method not implemented.');
+  }
+  getEmployeesByDni(dni: string): Promise<EmpleadoDatosDto> {
+    throw new Error('Method not implemented.');
+  }
   constructor(
-    @InjectRepository(Empleado) private repositoryEmpleado: Repository<Empleado>,
-    @InjectRepository(Usuario) private repositoryUsuario: Repository<Usuario>
-  ){}
+    @InjectRepository(Empleado)
+    private readonly repositoryEmpleado: Repository<Empleado>,
+    @InjectRepository(Usuario)
+    private readonly repositoryUsuario: Repository<Usuario>,
+  ) {}
 
-  // BUSCAR EMPLEADOS
-
-  allEmployees():Promise<EmpleadoDatosDto[]>{
-    return this.repositoryEmpleado.find();
+  /**
+   * Devuelve todos los empleados junto a sus citas
+   */
+  async allEmployees(): Promise<EmpleadoDatosDto[]> {
+    const empleados = await this.repositoryEmpleado.find({ relations: ['citas'] });
+    return empleados.map(emp => new EmpleadoDatosDto(emp));
   }
 
-  // ALTA EMPLEADO
+  /**
+   * Crea un nuevo empleado y usuario, si no existe
+   */
+  async highEmployee(dto: EmpleadoAltaDto): Promise<EmpleadoDatosDto | false> {
+    const existing = await this.repositoryEmpleado.findOne({ where: { dni: dto.dni } });
+    if (existing) return false;
 
-  async highEmployees(empleadoNuevo: EmpleadoAltaDto):Promise<boolean>{
-    // Verifica si el empleado existe, si no, lo crea
-    let empleado :Empleado = await this.repositoryEmpleado.findOne({ where: { dni: empleadoNuevo.dni } });
-    if (!empleado) {
-      empleado = this.repositoryEmpleado.create(empleadoNuevo);
-      await this.repositoryEmpleado.save(empleado);
-      await this.repositoryUsuario.save(new UserAltaDto(empleadoNuevo.email, empleadoNuevo.password, 'empleado'));
-      return true;
-      }
-    else{
-      return false;
-    }
-  }
-  
+    const empleado = this.repositoryEmpleado.create(dto);
+    const saved = await this.repositoryEmpleado.save(empleado);
 
-  //BAJA EMPLEADO
+    // Crear usuario asociado
+    const userDto = new UserAltaDto(dto.email, dto.password, 'empleado');
+    const userEntity = this.repositoryUsuario.create(userDto);
+    await this.repositoryUsuario.save(userEntity);
 
-  async deleteEmployees(dni: string): Promise<boolean> {
-    // Busca solo al empleado por su DNI
-    const delet: Empleado = await this.repositoryEmpleado.findOne({
-      where: { dni: dni }
+    // Recargar con relaciones
+    const empWithRelations = await this.repositoryEmpleado.findOne({ 
+      where: { dni: saved.dni },
+      relations: ['citas'],
     });
+    return empWithRelations ? new EmpleadoDatosDto(empWithRelations) : false;
+  }
 
-    if (delet) {
-      // Elimina al empleado si existe
-      await this.repositoryEmpleado.delete(delet.dni); 
-      return true;
-    } else {
+  /**
+   * Elimina un empleado y su usuario
+   */
+  async deleteEmployee(dni: string): Promise<boolean> {
+    const result = await this.repositoryEmpleado.delete(dni);
+    return (result.affected ?? 0) > 0;
+  }
+
+  /**
+   * Modifica datos de un empleado
+   */
+  async modifyEmployee(dni: string, dto: EmpleadoAltaDto): Promise<boolean> {
+    const result = await this.repositoryEmpleado.update(dni, dto);
+    return (result.affected ?? 0) > 0;
+  }
+
+  /**
+   * Busca un empleado por DNI, lanzando 404 si no existe
+   */
+  async findEmpleadoByDni(dni: string): Promise<EmpleadoDatosDto | false> {
+    const emp = await this.repositoryEmpleado.findOne({ 
+      where: { dni },
+      relations: ['citas'],
+    });
+    if (!emp){
       return false;
     }
+    return new EmpleadoDatosDto(emp);
   }
-  
-  
-  //MODIFICAR EMPLEADO
 
-  async modifyEmployees(dni:string, empleadoNuevo: EmpleadoAltaDto):Promise<boolean>{
-      const result = await this.repositoryEmpleado.createQueryBuilder()
-      .update(Empleado)
-      .set({ ...empleadoNuevo })
-      .where("dni=:dni", { dni:dni })
-      .execute();
-
-      return result.affected && result.affected > 0;
-  }
-  async findEmpleadoByDni(dni: string): Promise<EmpleadoDatosDto | boolean> {
-    const empleado =  await this.repositoryEmpleado.findOneBy({ dni });
-    if (empleado) {
-      return new EmpleadoDatosDto(empleado.dni, empleado.email, empleado.password, empleado.nombre, empleado.apellido, empleado.especialidad, empleado.telefono);
-    }
-    return false;
-  }
-  async getEmployeesByEmail(email: string): Promise<EmpleadoDatosDto> {
-    const empleado = await this.repositoryEmpleado.findOne({ where: { email } });
-    if (empleado) {
-      return new EmpleadoDatosDto(empleado.dni, empleado.email, empleado.password, empleado.nombre, empleado.apellido, empleado.especialidad, empleado.telefono);
-    }
-    return null;
-  }
-  async getEmployeesByDni(dni: string): Promise<EmpleadoDatosDto> {
-    const empleado = await this.repositoryEmpleado.findOne({ where: { dni } });
-    if (empleado) {
-      return new EmpleadoDatosDto(empleado.dni, empleado.email, empleado.password, empleado.nombre, empleado.apellido, empleado.especialidad, empleado.telefono);
-    }
-    return null;
+  /**
+   * Busca un empleado por email, lanzando 404 si no existe
+   */
+  async findEmployeeByEmail(email: string): Promise<EmpleadoDatosDto> {
+    const emp = await this.repositoryEmpleado.findOne({ 
+      where: { email },
+      relations: ['citas'],
+    });
+    if (!emp) throw new NotFoundException(`Empleado con email ${email} no encontrado`);
+    return new EmpleadoDatosDto(emp);
   }
 }
-

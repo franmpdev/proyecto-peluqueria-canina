@@ -17,7 +17,7 @@ export class EmpleadoController {
   constructor(private readonly empleadoService: EmpleadoService) {}
   @Post('altaEmpleado')
   async altaEmpleado(@Body() empleado:EmpleadoAltaDto, @Res() res:Response){
-    const creada = await this.empleadoService.highEmployees(empleado);
+    const creada = await this.empleadoService.highEmployee(empleado);
     if(creada){
       return res.status(201).json({
         message: 'Empleado creada',
@@ -36,17 +36,17 @@ export class EmpleadoController {
   getEmpleadoByEmail(@Param('email') email:string):Promise<EmpleadoDatosDto>{
     return this.empleadoService.getEmployeesByEmail(email);
   }
-    @Get('findEmpleadoByDni/:dni')
+  @Get('findEmpleadoByDni/:dni')
   getEmpleadoByDni(@Param('dni') dni:string):Promise<EmpleadoDatosDto>{
     return this.empleadoService.getEmployeesByDni(dni);
   }
   @Patch('modificarEmpleado/:dni')
   modifyEmpleado(@Param('dni') dni:string, @Body() empleado:EmpleadoAltaDto){
-    return this.empleadoService.modifyEmployees(dni,empleado);
+    return this.empleadoService.modifyEmployee(dni,empleado);
   }
   @Delete('eliminarEmpleado/:dni')
   async deleteEmpleado(@Param('dni') dni: string, @Res() res: Response) {
-    const delet = await this.empleadoService.deleteEmployees(dni);
+    const delet = await this.empleadoService.deleteEmployee(dni);
     if (delet) {
       return res.status(200).json({
         message: "Has eliminado al empleado"

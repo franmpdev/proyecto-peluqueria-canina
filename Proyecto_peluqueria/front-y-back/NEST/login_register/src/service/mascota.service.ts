@@ -51,7 +51,7 @@ export class MascotaService {
     return mascotasDto;
   }
   //BUSCAR MASCOTA POR EMAIL DE CLIENTE Y NOMBRE
-  async findMascotaByEmailAndName(email: string, nombre: string): Promise<MascotaDatosDto | boolean> {
+  async findMascotaByEmailAndName(email: string, nombre: string): Promise<MascotaDatosDto | false> {
     const mascota = await this.repositoryMascota.findOne({ where: { email_cliente:email, nombre:nombre },
     relations: ['cliente', 'citas'] });
     if(mascota){
@@ -71,20 +71,40 @@ export class MascotaService {
 
   //ALTA MASCOTA
 
-  async highAnimals(mascota: MascotaAltaDto):Promise<Mascota | boolean>{
+  async highAnimals(dto: MascotaAltaDto): Promise<MascotaDatosDto | false> {
+    // Comprueba si ya existe una mascota con los mismos datos
+    const existente = await this.repositoryMascota.findOne({
+      where: {
+        email_cliente: dto.email_cliente,
+        nombre: dto.nombre,
+        raza: dto.raza,
+      },
+    });
 
-    // Verifica si la mascota existe, si no, lo crea
-      let mascotaRepetida:Mascota = await this.repositoryMascota.findOne({ where: { email_cliente: mascota.email_cliente, nombre: mascota.nombre, raza: mascota.raza}});
-      if (!mascotaRepetida) {
-        this.repositoryMascota.create(mascota);
-        let mascotacreada = await this.repositoryMascota.save(mascota)
-        return mascotacreada;
-      }
-      else{
-        return false;
-      }
+    if (existente) {
+      return false;
+    }
 
-  } 
+    // Crea y guarda la nueva mascota
+    const nueva = this.repositoryMascota.create({
+      email_cliente: dto.email_cliente,
+      nombre: dto.nombre,
+      raza: dto.raza,
+      edad: dto.edad,
+    });
+    const guardada = await this.repositoryMascota.save(nueva);
+
+    // Devuelve un DTO con los datos de la mascota creada
+    return new MascotaDatosDto(
+      guardada.id_mascota,
+      guardada.cliente,
+      guardada.citas,
+      guardada.nombre,
+      guardada.raza,
+      guardada.edad,
+    );
+  }
+
 
   //BAJA MASCOTA
 

@@ -1,31 +1,21 @@
+import { Cliente } from '../model/Cliente';
+import { Empleado } from '../model/Empleado';
 import { Cita } from '../model/Cita';
+import { Mascota } from 'src/model/Mascota';
 
 export class CitaDatosDto {
   id_cita: number;
-  email_cliente: string;
-  nombre_cliente: string;
-  telefono_cliente: string;
-  dni_empleado: string;
-  nombre_mascota:string;
-  raza_mascota: string;
+  cliente: Cliente;
+  empleado: Empleado;
+  mascota: Mascota;
   fecha: Date;
   hora: string;
 
-  constructor(
-    cita: Cita,
-    nombre_cliente: string,
-    telefono_cliente: string,
-    dni_empleado:string,
-    nombre_mascota:string,
-    raza_mascota: string,
-  ) {
+  constructor(cita: Cita) {
     this.id_cita = cita.id_cita;
-    this.email_cliente = cita.email_cliente;
-    this.nombre_cliente = nombre_cliente;
-    this.telefono_cliente = telefono_cliente;
-    this.dni_empleado = dni_empleado    
-    this.nombre_mascota = nombre_mascota;
-    this.raza_mascota = raza_mascota;
+    this.cliente = cita.cliente;
+    this.empleado = cita.empleado;
+    this.mascota  = cita.mascota;
     this.fecha = cita.fecha;
     this.hora = cita.hora;
   }
