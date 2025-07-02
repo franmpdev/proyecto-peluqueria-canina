@@ -4,7 +4,6 @@ import { PedidoAltaDto } from 'src/dto/PedidoAltaDto';
 import { PedidoDatosDto } from 'src/dto/PedidoDatosDto';
 import { PedidoProductoAltaDto } from 'src/dto/PedidoProductoAltaDto';
 import { PedidoProductoDatosDto } from 'src/dto/PedidoProductoDatosDto';
-import { ProductoAltaDto } from 'src/dto/ProductoAltaDto';
 import { ProductoDatosDto } from 'src/dto/ProductoDatosDto';
 import { Pedido } from 'src/model/Pedido';
 import { PedidoProducto } from 'src/model/PedidoProducto';
@@ -55,14 +54,13 @@ export class TiendaService {
 
   //Crear un pedido y obtener su ID
   async crearPedidoConProductos(dto: PedidoAltaDto): Promise<number> {
-  // 1️ CREAR Y GUARDAR EL PEDIDO
   const pedido = this.pedidoRepo.create({
     emailCliente: dto.email_cliente,
     fecha:        new Date(dto.fecha),
   });
   const guardado = await this.pedidoRepo.save(pedido);
 
-  // 2️ CREAR Y GUARDAR CADA PEDIDOPRODUCTO
+  //Añade los productos al pedido
   for (const linea of dto.productos) {
     const pp = this.pedidoProductoRepo.create({
       pedido:   guardado,
@@ -75,14 +73,7 @@ export class TiendaService {
   return guardado.id;
 }
   
-  //Añadir un producto al pedido
-  async añadirProductoAlPedido(dto: PedidoProductoAltaDto):Promise<boolean>{
-    const pedidoProducto = this.pedidoProductoRepo.create(dto);
-    await this.pedidoProductoRepo.save(pedidoProducto).catch(error => {
-      return false;
-    });
-    return true;
-  }
+  //Buscar los pedidos del cliente
   async findPedidosByClient(email: string): Promise<PedidoDatosDto[]> {
     const pedidos = await this.pedidoRepo.find({
       where: { emailCliente: email },
@@ -117,6 +108,10 @@ export class TiendaService {
   async modificarPedido(id:number, dto:PedidoAltaDto):Promise<boolean>{
     const result = await this.pedidoRepo.update(id, dto);
     return result.affected>0;
+  }
+  async cancelarPedido(id: number): Promise<boolean> {
+    const result = await this.pedidoRepo.delete(id);
+    return result.affected > 0;
   }
 }
 
