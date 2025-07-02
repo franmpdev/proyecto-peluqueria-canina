@@ -12,25 +12,15 @@ export class EmpleadoDatosDto {
   telefono: string;
   citas: Cita[];
 
-  constructor(empleado?: Empleado) {
-  if (empleado) {
-    this.dni = empleado.dni;
-    this.email = empleado.email;
-    this.password = empleado.password;
-    this.nombre = empleado.nombre;
-    this.apellido = empleado.apellido;
-    this.especialidad = empleado.especialidad;
-    this.telefono = empleado.telefono;
-    this.citas = empleado.citas;
-  } else {
-    this.dni = '';
-    this.email = '';
-    this.password = '';
-    this.nombre = '';
-    this.apellido = '';
-    this.especialidad = '';
-    this.telefono = '';
-    this.citas = [];
+  constructor(empleado: Empleado) {
+
+      this.dni = empleado.dni;
+      this.email = empleado.email;
+      this.password = empleado.password;
+      this.nombre = empleado.nombre;
+      this.apellido = empleado.apellido;
+      this.especialidad = empleado.especialidad;
+      this.telefono = empleado.telefono;
+      this.citas = empleado.citas;
   }
-}
 }

@@ -24,12 +24,7 @@ export class ClienteService {
     if (!existente) {
       const cliente = this.repositoryCliente.create(nuevo);
       await this.repositoryCliente.save(cliente);
-      return new ClienteDatosDto(
-        cliente.email,
-        cliente.nombre,
-        cliente.apellido,
-        cliente.telefono
-      );
+      return new ClienteDatosDto(cliente);
     }
     return false;
   }
@@ -57,7 +52,7 @@ export class ClienteService {
       //devolver el cliente actualizado
       if(result.affected > 0) {
         const cliente = await this.repositoryCliente.findOneBy({ email });  
-        return new ClienteDatosDto(cliente.email, cliente.nombre, cliente.apellido, cliente.telefono);
+        return new ClienteDatosDto(cliente);
       }
       return false;
 
@@ -74,15 +69,7 @@ export class ClienteService {
     if (!cliente) {
       return false;
     }
-
-    return new ClienteDatosDto(
-      cliente.email,
-      cliente.nombre,
-      cliente.apellido,
-      cliente.telefono,
-      cliente.mascotas,
-      cliente.citas
-    );
+    return new ClienteDatosDto(cliente);
   }
 
   async allClientes(): Promise<ClienteDatosDto[]> {
@@ -92,14 +79,7 @@ export class ClienteService {
     });
 
     // 2. Las mapeas a DTOs
-    return clientes.map(c => new ClienteDatosDto(
-      c.email,
-      c.nombre,
-      c.apellido,
-      c.telefono, 
-      c.mascotas,    
-      c.citas        
-    ));
+    return clientes.map(cliente => new ClienteDatosDto(cliente));
   }
 
 

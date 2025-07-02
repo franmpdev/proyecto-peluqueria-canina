@@ -33,11 +33,12 @@ export class RegisterComponent {
       next: (cliente: ClienteDatosDto) => {
         // Maneja el éxito (puedes mostrar un mensaje o redirigir)
         localStorage.setItem('cliente', JSON.stringify(cliente))
-        localStorage.setItem('user', JSON.stringify(cliente))
         this.clienteService.setCliente(cliente);
         this.userService.createUser(new UserAltaDto(cliente.email, this.password, 'cliente')).subscribe({
           next: (user)=>{
+            console.log(user);
             this.router.navigate(['/home']);
+            localStorage.setItem('user', JSON.stringify(user))
           }
         })
       }

@@ -1,8 +1,8 @@
-import { EmpleadoDatosDto } from './../../../../../../../NEST/login_register/src/dto/EmpleadoDatosDto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EmpleadoAltaDto } from '../model/EmpeladoAltaDto';
+import { EmpleadoDatosDto } from '../model/EmpleadoDatosDto';
 @Injectable({
   providedIn: 'root'
 })

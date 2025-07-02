@@ -26,28 +26,14 @@ export class MascotaService {
       return null;
     }
 
-    return new MascotaDatosDto(
-      mascota.id_mascota,
-      mascota.cliente,
-      mascota.citas,
-      mascota.nombre,
-      mascota.raza,
-      mascota.edad,
-    );
+    return new MascotaDatosDto(mascota);
   }
   
   //BUSCAR MASCOTAS POR EMAIL DE CLIENTE
   async getMascotasPorEmail(email: string): Promise<MascotaDatosDto[]> {
     const mascotas = this.repositoryMascota.find({ where: { email_cliente:email },
     relations: ['cliente', 'citas'] });
-    const mascotasDto: MascotaDatosDto[] = (await mascotas).map(mascota => new MascotaDatosDto(
-      mascota.id_mascota,
-      mascota.cliente,
-      mascota.citas,
-      mascota.nombre,
-      mascota.raza,
-      mascota.edad,
-    ));
+    const mascotasDto: MascotaDatosDto[] = (await mascotas).map(mascota => new MascotaDatosDto(mascota));
     return mascotasDto;
   }
   //BUSCAR MASCOTA POR EMAIL DE CLIENTE Y NOMBRE
@@ -55,14 +41,7 @@ export class MascotaService {
     const mascota = await this.repositoryMascota.findOne({ where: { email_cliente:email, nombre:nombre },
     relations: ['cliente', 'citas'] });
     if(mascota){
-      return new MascotaDatosDto(
-        mascota.id_mascota,
-        mascota.cliente,
-        mascota.citas,
-        mascota.nombre,
-        mascota.raza,
-        mascota.edad
-      )
+      return new MascotaDatosDto(mascota)
     }else{
       return false;
     }
@@ -95,14 +74,7 @@ export class MascotaService {
     const guardada = await this.repositoryMascota.save(nueva);
 
     // Devuelve un DTO con los datos de la mascota creada
-    return new MascotaDatosDto(
-      guardada.id_mascota,
-      guardada.cliente,
-      guardada.citas,
-      guardada.nombre,
-      guardada.raza,
-      guardada.edad,
-    );
+    return new MascotaDatosDto(guardada);
   }
 
 

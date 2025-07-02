@@ -1,8 +1,9 @@
-export class CategoriaDatosDto{
+import { ProductoDatosDto } from "./ProductoDatosDto";
+
+export interface CategoriaDatosDto{
+
   id_categoria: number;
   nombre: string;
-  constructor(id_categoria: number, nombre: string) {
-    this.id_categoria = id_categoria;
-    this.nombre = nombre;
-  }
+  productos: ProductoDatosDto[];
+
 }

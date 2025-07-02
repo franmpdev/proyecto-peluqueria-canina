@@ -37,7 +37,7 @@ export class UserController {
     if (!updated) {
       return res.status(404).json({ message: 'User not found' });
     }
-    return res.status(200).json(updated);
+    return res.status(200).json({message: 'User updated successfully'});
   }
 
   @Delete(':id')

@@ -32,23 +32,14 @@ export class Empleado {
   @OneToMany(() => Cita, cita => cita.empleado)
   citas: Cita[];
 
-  constructor(
-    dni?: string,
-    email?: string,
-    password?: string,
-    nombre?: string,
-    apellido?: string,
-    especialidad?: string,
-    telefono?: string,
-    citas?: Cita[]
-  ) {
-    this.dni = dni ?? '';
-    this.email = email ?? '';
-    this.password = password ?? '';
-    this.nombre = nombre ?? '';
-    this.apellido = apellido ?? '';
-    this.especialidad = especialidad ?? '';
-    this.telefono = telefono ?? '';
+  constructor(dni: string, email: string, password: string, nombre: string, apellido: string, especialidad?: string, telefono?: string, citas?: Cita[]) {
+    this.dni = dni;
+    this.email = email;
+    this.password = password;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.especialidad = especialidad;
+    this.telefono = telefono;
     this.citas = citas;
   }
 }

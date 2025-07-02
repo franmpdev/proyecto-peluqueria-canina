@@ -35,6 +35,7 @@ export class LoginComponent {
               next: (cliente) => {
                 localStorage.setItem('cliente', JSON.stringify(cliente));
                 this.clienteService.setCliente(cliente);
+                console.log(cliente)
                 localStorage.setItem('cliente', JSON.stringify(cliente));
                 this.router.navigate(['/home']);
               }

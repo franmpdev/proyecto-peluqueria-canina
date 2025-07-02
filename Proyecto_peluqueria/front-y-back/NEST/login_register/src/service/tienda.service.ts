@@ -2,9 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoAltaDto } from 'src/dto/PedidoAltaDto';
 import { PedidoDatosDto } from 'src/dto/PedidoDatosDto';
-import { PedidoProductoAltaDto } from 'src/dto/PedidoProductoAltaDto';
 import { PedidoProductoDatosDto } from 'src/dto/PedidoProductoDatosDto';
-import { ProductoDatosDto } from 'src/dto/ProductoDatosDto';
 import { Pedido } from 'src/model/Pedido';
 import { PedidoProducto } from 'src/model/PedidoProducto';
 import { Producto } from 'src/model/Producto';
@@ -13,8 +11,6 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class TiendaService {
   constructor(
-    @InjectRepository(Producto)
-    private readonly productoRepo: Repository<Producto>,
     @InjectRepository(Pedido)
     private readonly pedidoRepo: Repository<Pedido>,
     @InjectRepository(PedidoProducto)
@@ -29,24 +25,10 @@ export class TiendaService {
     for (const pedido of pedidos) {
       const productosDto: PedidoProductoDatosDto[] = [];
       for (const pedProd of pedido.pedidosProductos) {
-        const producto = pedProd.producto;
-        const productoDto = new ProductoDatosDto(
-          producto.id,
-          producto.nombre,
-          producto.descripcion,
-          producto.precio,
-          producto.categoria?.id_categoria,
-          producto.stock
-        );
-        const pedProdDto = new PedidoProductoDatosDto(productoDto, pedProd.cantidad);
+        const pedProdDto = new PedidoProductoDatosDto(pedProd);
         productosDto.push(pedProdDto);
       }
-      const pedidoDto = new PedidoDatosDto(
-        pedido.id,
-        pedido.emailCliente,
-        productosDto,
-        pedido.fecha
-      );
+      const pedidoDto = new PedidoDatosDto(pedido);
       pedidosDto.push(pedidoDto);
     }
     return pedidosDto;
@@ -83,24 +65,10 @@ export class TiendaService {
     for (const pedido of pedidos) {
       const productosDto: PedidoProductoDatosDto[] = [];
       for (const pedProd of pedido.pedidosProductos) {
-        const producto = pedProd.producto;
-        const productoDto = new ProductoDatosDto(
-          producto.id,
-          producto.nombre,
-          producto.descripcion,
-          producto.precio,
-          producto.categoria?.id_categoria,
-          producto.stock
-        );
-        const pedProdDto = new PedidoProductoDatosDto(productoDto, pedProd.cantidad);
+        const pedProdDto = new PedidoProductoDatosDto(pedProd);
         productosDto.push(pedProdDto);
       }
-      const pedidoDto = new PedidoDatosDto(
-        pedido.id,
-        pedido.emailCliente,
-        productosDto,
-        pedido.fecha
-      );
+      const pedidoDto = new PedidoDatosDto(pedido);
       pedidosDto.push(pedidoDto);
     }
     return pedidosDto;

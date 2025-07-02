@@ -34,14 +34,7 @@ export class ProductosService {
     const creado = await this.repositoryProducto.save(entidad);
 
     // 3️ Devuelve DTO de datos
-    return new ProductoDatosDto(
-      creado.id,
-      creado.nombre,
-      creado.descripcion,
-      creado.categoria.id_categoria,
-      creado.precio,
-      creado.stock,
-    );
+    return new ProductoDatosDto(creado);
   }
 
   //BAJA PRODUCTO
@@ -70,14 +63,7 @@ export class ProductosService {
 
     for (const prods of productos) {
       productosDto.push(
-        new ProductoDatosDto(
-          prods.id,
-          prods.nombre,
-          prods.descripcion,
-          prods.precio,
-          prods.categoria.id_categoria,
-          prods.stock,
-        )
+        new ProductoDatosDto(prods)
       );
     }
     return productosDto;

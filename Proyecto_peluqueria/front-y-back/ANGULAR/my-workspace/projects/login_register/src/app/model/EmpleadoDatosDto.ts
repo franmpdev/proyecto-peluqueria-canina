@@ -1,4 +1,6 @@
-export class EmpleadoDatosDto {
+import { CitaDatosDto } from "./CitaDatosDto";
+
+export interface EmpleadoDatosDto {
   dni: string;
   email: string;
   password: string;
@@ -6,13 +8,6 @@ export class EmpleadoDatosDto {
   apellido: string;
   especialidad: string;
   telefono: string;
-  constructor(dni: string, email: string, password: string, nombre: string, apellido: string, especialidad: string, telefono: string) {
-    this.dni = dni;
-    this.email = email;
-    this.password = password;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.especialidad = especialidad;
-    this.telefono = telefono;
-  }
+  citas: CitaDatosDto[];
+
 }

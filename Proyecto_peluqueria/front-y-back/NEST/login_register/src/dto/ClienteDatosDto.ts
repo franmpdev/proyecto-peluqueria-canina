@@ -1,5 +1,6 @@
 import { IsEmail, IsInt, IsString, IsStrongPassword, Length } from "class-validator";
 import { Cita } from "src/model/Cita";
+import { Cliente } from "src/model/Cliente";
 import { Mascota } from "src/model/Mascota";
 
 export class ClienteDatosDto {
@@ -12,13 +13,13 @@ export class ClienteDatosDto {
   citas: Cita[];
 
 
-  constructor(email: string, nombre: string, apellido: string, telefono: string, mascotas?: Mascota[], citas?: Cita[]) {
-    this.email = email;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.telefono = telefono;
-    this.mascotas = mascotas;
-    this.citas = citas;
+  constructor(cliente: Cliente) {
+    this.email = cliente.email;
+    this.nombre = cliente.nombre;
+    this.apellido = cliente.apellido;
+    this.telefono = cliente.telefono;
+    this.mascotas = cliente.mascotas;
+    this.citas = cliente.citas;
   
   }
 }

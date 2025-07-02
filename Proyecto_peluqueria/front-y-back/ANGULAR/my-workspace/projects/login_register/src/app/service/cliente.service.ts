@@ -6,7 +6,7 @@ import { ClienteDatosDto } from '../model/ClienteDatosDto';
   providedIn: 'root'
 })
 export class ClienteService {
-  url:string = 'http://localhost:3000/login';
+  url:string = 'http://localhost:3000/clientes';
   cliente: ClienteDatosDto | null = null;
   constructor(private http:HttpClient) { }
   findUsu(email:string):Observable<ClienteDatosDto>{

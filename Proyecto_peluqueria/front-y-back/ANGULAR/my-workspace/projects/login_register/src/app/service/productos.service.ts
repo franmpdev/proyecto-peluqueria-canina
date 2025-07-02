@@ -10,7 +10,7 @@ export class ProductosService {
 constructor(private http:HttpClient) { }
   url:string= 'http://localhost:3000/productos';
   allProduct():Observable<ProductoDatosDto[]>{
-    return this.http.get<ProductoDatosDto[]>(`${this.url}/Productos`);
+    return this.http.get<ProductoDatosDto[]>(`${this.url}`);
   }
   newProduct(nuevoProducto:ProductoAltaDto):Observable<any>{
     return this.http.post<any>(`${this.url}/altaProducto`,nuevoProducto);

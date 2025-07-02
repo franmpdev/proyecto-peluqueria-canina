@@ -13,20 +13,20 @@ export class UserService {
   async create(user: UserAltaDto): Promise<UserDatosDto> {
     const newUser = this.userRepository.create(user);
     const creado =await this.userRepository.save(newUser);
-    return new UserDatosDto(creado.id, creado.email, creado.role);
+    return new UserDatosDto(creado);
   }
 
   async findOne(email: string, password: string): Promise<UserDatosDto | null> {
     const user = await this.userRepository.findOne({ where: { email, password } });
     if (user) {
-      return new UserDatosDto(user.id, user.email, user.role);
+      return new UserDatosDto(user);
     }
     return null;
   }
-  async update(id: number, user: UserAltaDto): Promise<UserDatosDto | false> {
+  async update(id: number, user: UserAltaDto): Promise<boolean> {
     const result = await this.userRepository.update(id, user);
     if(result.affected>0){
-      return new UserDatosDto(id, user.email, user.role);
+      return true
     }else{
       return false;
     }

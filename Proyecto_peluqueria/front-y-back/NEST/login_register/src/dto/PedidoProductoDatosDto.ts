@@ -1,13 +1,15 @@
-import { ProductoDatosDto } from "./ProductoDatosDto";
+import { PedidoProducto } from "src/model/PedidoProducto";
+import { Producto } from "src/model/Producto";
 
 
 export class PedidoProductoDatosDto {
   id_pedido: number;
-  producto: ProductoDatosDto;
+  producto: Producto;
   cantidad: number;
 
-  constructor( producto: ProductoDatosDto, cantidad: number) {
-    this.producto = producto;
-    this.cantidad = cantidad;
+  constructor(pedidoproducto: PedidoProducto) {
+    this.id_pedido = pedidoproducto.pedido.id;
+    this.producto = pedidoproducto.producto;
+    this.cantidad = pedidoproducto.cantidad;
   }
 }

@@ -21,7 +21,7 @@ export class PedidoProducto {
   @JoinColumn({ name: 'id_producto' })
   producto: Producto;
 
-  constructor(pedido?: Pedido, producto?: Producto, cantidad?: number) {
+  constructor(pedido: Pedido, producto: Producto, cantidad: number) {
     this.pedido = pedido;
     this.idPedido = pedido?.id;
     this.producto = producto;

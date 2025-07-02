@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import { UserAltaDto } from './../../../../../../../NEST/login_register/src/dto/UserAltaDto';
-import { UserDatosDto } from './../../../../../../../NEST/login_register/src/dto/UserDatosDto';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserDatosDto } from '../model/UserDatosDto';
+import { UserAltaDto } from '../model/UserAltaDto';
 @Injectable({
   providedIn: 'root'
 })

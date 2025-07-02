@@ -17,9 +17,9 @@
         <tr *ngFor="let cita of citas">
           <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td>
           <td>{{ cita.hora }}</td>
-          <td>{{ cita.nombre_mascota }}</td>
-          <td>{{ cita.nombre_cliente }}</td>
-          <td>{{ cita.nombre_empleado }} {{ cita.apellido_empleado }}</td>
+          <td>{{ cita.mascota.nombre }}</td>
+          <td>{{ cita.cliente.nombre }}</td>
+          <td>{{ cita.empleado.nombre }} {{ cita.empleado.apellido }}</td>
           <td>
             <button (click)="eliminarCita(cita.id_cita)" class="btn-eliminar">Eliminar</button>
           </td>

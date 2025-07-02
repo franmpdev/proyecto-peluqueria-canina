@@ -3,7 +3,7 @@ import { CitaService } from '../../../../service/cita.service';
 import { CitaDatosDto } from '../../../../model/CitaDatosDto';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EmpleadoService } from '../../../../service/empleado.service';
+
 @Component({
   selector: 'app-mis-citas',
   templateUrl: './mis-citas.component.html',
@@ -12,19 +12,12 @@ import { EmpleadoService } from '../../../../service/empleado.service';
 })
 export class MisCitasComponent  {
   citas: CitaDatosDto[] = [];
-  constructor(private citasService: CitaService, private empleadoService: EmpleadoService) { }
+  constructor(private citasService: CitaService) { }
   ngOnInit() {
     let email = JSON.parse(localStorage.getItem('cliente') || '{}').email;
     this.citasService.getMisCitas(email).subscribe(citas => {
       this.citas = citas;
-      this.citas.forEach(cita => {
-        this.empleadoService.getEmpleadoPorDni(cita.dni_empleado).subscribe(empleado => {
-          cita.nombre_empleado = empleado.nombre;
-          cita.apellido_empleado = empleado.apellido;
-        }, error => {
-        });
       });
-    });
   }
   eliminarCita(id: number) {
     this.citasService.eliminarCita(id).subscribe({

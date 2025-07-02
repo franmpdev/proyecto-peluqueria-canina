@@ -18,14 +18,6 @@ export class GestionCitasComponent {
     this.citasService.obtenerCitas().subscribe({
       next: (citas) => {
         this.citas = citas;
-        this.empleadosService.allEmpleados().subscribe({
-          next: (empleados) => {
-            this.empleados = empleados;
-            this.asignarEmpleado()
-          },
-          error: () => {
-          }
-        });
       },
       error: () => {
       }
@@ -42,16 +34,5 @@ export class GestionCitasComponent {
       }
     });
   }
-  asignarEmpleado() {
-    this.citas.forEach(cita => {
-      const empleado = this.empleados.find(e => e.dni == cita.dni_empleado);
-      if (empleado) {
-        cita.nombre_empleado = empleado.nombre;
-        cita.apellido_empleado = empleado.apellido;
-      } else {
-        cita.nombre_empleado = '';
-        cita.apellido_empleado = '';
-      }
-    });
-  }
+
 }

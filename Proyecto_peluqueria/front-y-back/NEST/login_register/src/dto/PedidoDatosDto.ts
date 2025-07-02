@@ -1,14 +1,15 @@
-import { PedidoProductoDatosDto } from "./PedidoProductoDatosDto";
+import { Pedido } from "src/model/Pedido";
+import { PedidoProducto } from "src/model/PedidoProducto";
 
 export class PedidoDatosDto {
   id_pedido: number;  
   email_cliente: string;
-  pedidoproductos: PedidoProductoDatosDto[];
+  pedidoproductos: PedidoProducto[];
   fecha: Date;
-  constructor(id_pedido: number, email_cliente: string, pedidoproductos: PedidoProductoDatosDto[],fecha: Date,) {
-    this.id_pedido = id_pedido;
-    this.email_cliente = email_cliente;
-    this.pedidoproductos = pedidoproductos;
-    this.fecha = fecha;
+  constructor(pedido: Pedido) {
+    this.id_pedido = pedido.id;
+    this.email_cliente = pedido.emailCliente;
+    this.pedidoproductos = pedido.pedidosProductos;
+    this.fecha = pedido.fecha;
   }
 }

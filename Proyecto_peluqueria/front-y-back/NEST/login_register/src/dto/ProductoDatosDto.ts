@@ -1,3 +1,4 @@
+import { Producto } from "src/model/Producto";
 
 export class ProductoDatosDto {
 
@@ -8,12 +9,12 @@ export class ProductoDatosDto {
   id_categoria:number;
   stock: number;
 
-  constructor(id_producto?: number, nombre?: string, descripcion?: string, precio?: number, id_categoria?: number, stock?: number) {
-    this.nombre = nombre;
-    this.descripcion = descripcion;
-    this.id_categoria = id_categoria;
-    this.precio = precio;
-    this.stock = stock;
-    this.id_producto = id_producto;
+  constructor(producto: Producto){
+    this.id_producto = producto.id;
+    this.nombre = producto.nombre;
+    this.descripcion = producto.descripcion;
+    this.precio = producto.precio;
+    this.id_categoria = producto.categoria?.id_categoria;
+    this.stock = producto.stock;
   }
 }

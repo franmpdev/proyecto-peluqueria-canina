@@ -17,7 +17,7 @@ import { PedidoAltaDto } from 'src/dto/PedidoAltaDto';
 export class TiendaController {
   constructor(private readonly tiendaService: TiendaService) {}
 
-  @Get('')
+  @Get('pedidos')
   async mostrarTodos(@Res() res: Response) {
     const pedidos = await this.tiendaService.todosLosPedidos();
     return res.status(200).json(pedidos);
@@ -41,7 +41,7 @@ export class TiendaController {
     return res.status(404).send('No se encontró el pedido');
   }
 
-  @Post('pedidos/nuevoPedido')
+  @Post('pedidos')
   async crearPedidoCompleto(@Body() dto: PedidoAltaDto, @Res() res: Response) {
     const id_pedido = await this.tiendaService.crearPedidoConProductos(dto);
     return res.status(201).json({ id_pedido });
