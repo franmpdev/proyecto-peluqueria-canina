@@ -11,7 +11,6 @@ import {
 import { EmpleadoAltaDto } from 'src/dto/EmpeladoAltaDto';
 import { EmpleadoService } from 'src/service/empleado.service';
 import { Response } from 'express';
-import { EmpleadoDatosDto } from 'src/dto/EmpleadoDatosDto';
 
 @Controller('empleados')
 export class EmpleadoController {

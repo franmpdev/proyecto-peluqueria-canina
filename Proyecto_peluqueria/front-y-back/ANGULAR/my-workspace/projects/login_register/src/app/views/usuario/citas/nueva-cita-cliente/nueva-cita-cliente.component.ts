@@ -7,6 +7,7 @@ import { MascotaService } from '../../../../service/mascota.service';
 import { MascotaDatosDto } from '../../../../model/mascotaDatosDto';
 import { EmpleadoService } from '../../../../service/empleado.service';
 import { EmpleadoDatosDto } from '../../../../model/EmpleadoDatosDto';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-nueva-cita-cliente',
   templateUrl: './nueva-cita-cliente.component.html',
@@ -21,35 +22,39 @@ export class NuevaCitaClienteComponent {
   id_mascota: number | null = null;
   fecha: string = '';
   hora: string = '';
-  mascotas: MascotaDatosDto[] = []; // Cambia el tipo según tu modelo de mascota
-  empleados: EmpleadoDatosDto[] = []; // Cambia el tipo según tu modelo de empleado
-  constructor(private empleadoService: EmpleadoService, private citaService: CitaService, private mascotasService: MascotaService) {}
+  mensajeError: string = '';
+  mascotas: MascotaDatosDto[] = [];
+  empleados: EmpleadoDatosDto[] = [];
+  constructor(private router: Router,private empleadoService: EmpleadoService, private citaService: CitaService, private mascotasService: MascotaService) {}
   ngOnInit() {
-    const cliente = JSON.parse(localStorage.getItem('cliente') || '{}');
-    this.email_cliente = cliente.email || '';
-    this.mascotasService.getMascotasPorEmail(this.email_cliente).subscribe(mascotas => {
-      this.mascotas = mascotas;
-      // Asumiendo que quieres la primera mascota
-    });
+    const cliente = JSON.parse(localStorage.getItem('cliente'));
+    console.log(cliente)
+    this.email_cliente = cliente.email;
+    this.nombre_cliente = cliente.nombre;
+    this.mascotas = cliente.mascotas
     this.empleadoService.allEmpleados().subscribe(data => {
       this.empleados = data;
     });
   }
   onSubmit() {
-    // Puedes agregar validaciones adicionales aquí si lo necesitas
+
     const citaDto = new CitaAltaClienteDto(
       this.email_cliente,
       this.dni_empleado,
       this.id_mascota!,
-      this.fecha as any, // Ajusta si tu DTO espera Date, puedes hacer new Date(this.fecha)
+      this.fecha as any,
       this.hora
     );
     citaDto.nombre_cliente = this.nombre_cliente;
     citaDto.telefono_cliente = this.telefono_cliente;
+    console.log(citaDto)
     this.citaService.crearCitaCliente(citaDto).subscribe({
-      next: (respuesta) => {
-        // Aquí puedes limpiar el formulario o mostrar un mensaje de éxito
+      next: () => {
+        this.router.navigate(['/mis-citas']);
+      },
+      error: (error) => {
+        this.mensajeError = error.error.message;
       }
-    });
+    })
   }
 }
