@@ -15,6 +15,10 @@ import { ProductoDatosDto } from 'src/dto/ProductoDatosDto';
 @Controller('productos')
 export class ProductoController {
   constructor(private readonly productoService: ProductosService) {}
+  @Get('')
+  allProductos():Promise<ProductoDatosDto[]>{
+    return this.productoService.findAllProduct();
+  }
   @Post('altaProducto')
   async altaProducto(@Body() producto:ProductoAltaDto, @Res() res:Response){
     const alta = await this.productoService.highProduct(producto);
@@ -28,10 +32,7 @@ export class ProductoController {
       });
     }
   }
-  @Get('Productos')
-  allProductos():Promise<ProductoDatosDto[]>{
-    return this.productoService.findAllProduct();
-  }
+
   @Delete('eliminarProductos/:id')
   async deleteProductos(@Param('id') id:number, @Res() res:Response){
     const delet = await this.productoService.deleteProduct(id);

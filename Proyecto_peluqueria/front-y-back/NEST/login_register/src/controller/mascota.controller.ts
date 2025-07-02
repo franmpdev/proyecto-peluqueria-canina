@@ -39,7 +39,7 @@ export class MascotaController {
       });
     }
   }
-    @Get('buscarMascota/:id')
+  @Get('buscarMascota/:id')
   async mascotaPorId(@Param('id') id: number, @Res()res :Response){
     const mascota = await this.mascotaService.getMascotaPorId(id);
     if(mascota){

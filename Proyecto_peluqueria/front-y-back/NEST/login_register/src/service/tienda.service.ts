@@ -22,25 +22,35 @@ export class TiendaService {
     private readonly pedidoProductoRepo: Repository<PedidoProducto>, 
   ) {}
 
-  // Mostrar
-  async obtenerTodos(): Promise<Producto[]> {
-    return await this.productoRepo.find();
-  }
-
-  // Añadir
-  async crearArticulo(dto: ProductoAltaDto): Promise<any> {
-    const pedidoProducto = this.productoRepo.create(dto);
-    
-    return await this.productoRepo.save(pedidoProducto);
-  }
-
-
-  //Eliminar
-  async eliminarArticulo(id: number): Promise<void> {
-    const resultado = await this.productoRepo.delete(id);
-    if (resultado.affected === 0) {
-      throw new NotFoundException("Artículo no encontrado");
+  async todosLosPedidos(): Promise<PedidoDatosDto[]> {
+    const pedidos = await this.pedidoRepo.find({
+      relations: ['pedidosProductos', 'pedidosProductos.producto', 'pedidosProductos.producto.categoria'],
+    })
+    const pedidosDto: PedidoDatosDto[] = [];
+    for (const pedido of pedidos) {
+      const productosDto: PedidoProductoDatosDto[] = [];
+      for (const pedProd of pedido.pedidosProductos) {
+        const producto = pedProd.producto;
+        const productoDto = new ProductoDatosDto(
+          producto.id,
+          producto.nombre,
+          producto.descripcion,
+          producto.precio,
+          producto.categoria?.id_categoria,
+          producto.stock
+        );
+        const pedProdDto = new PedidoProductoDatosDto(productoDto, pedProd.cantidad);
+        productosDto.push(pedProdDto);
+      }
+      const pedidoDto = new PedidoDatosDto(
+        pedido.id,
+        pedido.emailCliente,
+        productosDto,
+        pedido.fecha
+      );
+      pedidosDto.push(pedidoDto);
     }
+    return pedidosDto;
   }
 
   //Crear un pedido y obtener su ID
@@ -103,6 +113,10 @@ export class TiendaService {
       pedidosDto.push(pedidoDto);
     }
     return pedidosDto;
+  }
+  async modificarPedido(id:number, dto:PedidoAltaDto):Promise<boolean>{
+    const result = await this.pedidoRepo.update(id, dto);
+    return result.affected>0;
   }
 }
 

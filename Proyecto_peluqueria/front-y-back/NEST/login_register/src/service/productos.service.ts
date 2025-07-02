@@ -14,7 +14,7 @@ export class ProductosService {
   
   // ALTA PRODUCTO  
 
-   async highProduct(dto: ProductoAltaDto): Promise<ProductoDatosDto | boolean> {
+  async highProduct(dto: ProductoAltaDto): Promise<ProductoDatosDto | boolean> {
     // 1️ Evita duplicados buscando por nombre y descripción
     const existe = await this.repositoryProducto.findOne({
       where: { nombre: dto.nombre, descripcion: dto.descripcion },
@@ -49,36 +49,13 @@ export class ProductosService {
   async deleteProduct(id:number):Promise<boolean>{
     await this.repositoryProducto.delete(id);
     return true;
-
   }
   
   //MODIFICAR PRODUCTO
 
   async modifyProduct(id: number, dto: ProductoAltaDto): Promise<boolean> {
-  // 1️⃣ Actualiza los campos simples
-  const result = await this.repositoryProducto.update(id, {
-    nombre: dto.nombre,
-    descripcion: dto.descripcion,
-    precio: dto.precio,
-    stock: dto.stock,
-  });
-
-  // Si no había ninguna fila con ese id, salimos
-  if (result.affected === 0) {
-    return false;
-  }
-
-  // 2️⃣ Actualiza la relación categoria → id_categoria
-  // Solo si nos han pasado un id de categoría válido
-  if (dto.id_categoria != null) {
-    await this.repositoryProducto
-      .createQueryBuilder()
-      .relation(Producto, 'categoria')    // nombre de la propiedad en la entidad
-      .of(id)                             // sobre este producto
-      .set(dto.id_categoria);             // asigna la FK
-  }
-
-  return true;
+  const result = await this.repositoryProducto.update(id, dto);
+  return result.affected > 0;
 }
 
   //MOSTRAR TODOS LOS PRODUCTOS
@@ -100,7 +77,6 @@ export class ProductosService {
           prods.precio,
           prods.categoria.id_categoria,
           prods.stock,
-
         )
       );
     }

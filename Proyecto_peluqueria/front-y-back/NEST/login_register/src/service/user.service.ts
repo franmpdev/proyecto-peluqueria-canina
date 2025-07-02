@@ -23,10 +23,13 @@ export class UserService {
     }
     return null;
   }
-  async update(id: number, user: UserAltaDto): Promise<UserDatosDto> {
-    await this.userRepository.update(id, user);
-    const updatedUser = await this.userRepository.findOne({ where: { id } });
-    return new UserDatosDto(updatedUser.id, updatedUser.email, updatedUser.role);
+  async update(id: number, user: UserAltaDto): Promise<UserDatosDto | false> {
+    const result = await this.userRepository.update(id, user);
+    if(result.affected>0){
+      return new UserDatosDto(id, user.email, user.role);
+    }else{
+      return false;
+    }
   }
 
   async remove(id: number): Promise<boolean> {
