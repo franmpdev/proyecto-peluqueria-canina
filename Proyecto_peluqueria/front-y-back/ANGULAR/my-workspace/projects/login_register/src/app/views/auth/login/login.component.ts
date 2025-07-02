@@ -21,6 +21,7 @@ export class LoginComponent {
       next: (usuario: UserDatosDto) => {
         if (usuario) {
           localStorage.setItem('user', JSON.stringify(usuario))
+          console.log(usuario)
           if(usuario.role === 'empleado'){
             this.empleadoService.getEmpleadoByEmail(usuario.email).subscribe({
               next: (empleado) => {

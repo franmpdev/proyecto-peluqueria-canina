@@ -10,12 +10,7 @@ import { EmpleadoAltaDto } from 'src/dto/EmpeladoAltaDto';
 
 @Injectable()
 export class EmpleadoService {
-  getEmployeesByEmail(email: string): Promise<EmpleadoDatosDto> {
-    throw new Error('Method not implemented.');
-  }
-  getEmployeesByDni(dni: string): Promise<EmpleadoDatosDto> {
-    throw new Error('Method not implemented.');
-  }
+
   constructor(
     @InjectRepository(Empleado)
     private readonly repositoryEmpleado: Repository<Empleado>,
@@ -87,12 +82,14 @@ export class EmpleadoService {
   /**
    * Busca un empleado por email, lanzando 404 si no existe
    */
-  async findEmployeeByEmail(email: string): Promise<EmpleadoDatosDto> {
+  async findEmployeeByEmail(email: string): Promise<EmpleadoDatosDto | false> {
     const emp = await this.repositoryEmpleado.findOne({ 
       where: { email },
       relations: ['citas'],
     });
-    if (!emp) throw new NotFoundException(`Empleado con email ${email} no encontrado`);
+    if (!emp){
+      return false;
+    }
     return new EmpleadoDatosDto(emp);
   }
 }

@@ -26,6 +26,7 @@ export class TiendaController {
   @Get('/pedidos/:email')
   async buscarPedidosPorCliente(@Param('email') email: string, @Res() res: Response) {
     const pedidos = await this.tiendaService.findPedidosByClient(email);
+    console.log(pedidos)
     if (pedidos.length > 0) {
       return res.status(200).json(pedidos);
     }

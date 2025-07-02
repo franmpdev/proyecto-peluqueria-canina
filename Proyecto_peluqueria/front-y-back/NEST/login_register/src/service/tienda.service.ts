@@ -56,23 +56,19 @@ export class TiendaService {
 }
   
   //Buscar los pedidos del cliente
-  async findPedidosByClient(email: string): Promise<PedidoDatosDto[]> {
-    const pedidos = await this.pedidoRepo.find({
-      where: { emailCliente: email },
-      relations: ['pedidosProductos', 'pedidosProductos.producto'],
-    });
-    const pedidosDto: PedidoDatosDto[] = [];
-    for (const pedido of pedidos) {
-      const productosDto: PedidoProductoDatosDto[] = [];
-      for (const pedProd of pedido.pedidosProductos) {
-        const pedProdDto = new PedidoProductoDatosDto(pedProd);
-        productosDto.push(pedProdDto);
-      }
-      const pedidoDto = new PedidoDatosDto(pedido);
-      pedidosDto.push(pedidoDto);
-    }
-    return pedidosDto;
+async findPedidosByClient(email: string): Promise<PedidoDatosDto[]> {
+  const pedidos = await this.pedidoRepo.find({
+    where: { emailCliente: email },
+    relations: ['pedidosProductos', 'pedidosProductos.producto', 'pedidosProductos.pedido'],
+  });
+  const pedidosDto: PedidoDatosDto[] = [];
+  for (const pedido of pedidos) {
+    pedidosDto.push(new PedidoDatosDto(pedido));
   }
+  return pedidosDto;
+}
+
+
   async modificarPedido(id:number, dto:PedidoAltaDto):Promise<boolean>{
     const result = await this.pedidoRepo.update(id, dto);
     return result.affected>0;

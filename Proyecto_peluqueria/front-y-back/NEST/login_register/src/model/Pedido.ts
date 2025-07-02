@@ -17,7 +17,7 @@ export class Pedido {
   @JoinColumn({ name: 'email_cliente', referencedColumnName: 'email' })
   cliente: Cliente;
 
-  @OneToMany(() => PedidoProducto, pp => pp.pedido, { cascade: true, eager: true })
+  @OneToMany(() => PedidoProducto, pedidoProducto => pedidoProducto.pedido,  { onDelete: 'CASCADE' })
   pedidosProductos: PedidoProducto[];
 
   constructor(fecha?: Date, cliente?: Cliente, pedidosProductos?: PedidoProducto[]) {

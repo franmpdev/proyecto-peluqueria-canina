@@ -10,25 +10,15 @@ import { PedidoAltaDto } from '../model/PedidoAltaDto';
   providedIn: 'root'
 })
 export class TiendaService {
-  private apiUrl = 'http://localhost:3000/tiendas';
+  private apiUrl = 'http://localhost:3000/tienda';
 
   constructor(private http: HttpClient) {}
 
-  getProductos(): Observable<ProductoDatosDto[]> {
-    return this.http.get<ProductoDatosDto[]>(`${this.apiUrl}/Productos`);
-  }
-
-  altaProducto(producto: Partial<ProductoAltaDto>): Observable<ProductoDatosDto> {
-    return this.http.post<ProductoDatosDto>(`${this.apiUrl}/altaArticulo`, producto);
-  }
-
-  borrarProducto(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/borrarArticulo/${id}`);
-  }
   obtenerPedidos(email: string): Observable<PedidoDatosDto[]> {
     return this.http.get<PedidoDatosDto[]>(`${this.apiUrl}/pedidos/${email}`);
   }
   crearPedido(pedido: PedidoAltaDto): Observable<Partial<PedidoDatosDto>> {
-    return this.http.post<Partial<PedidoDatosDto>>(`${this.apiUrl}/pedidos/nuevoPedido`, pedido);
+    console.log(pedido)
+    return this.http.post<Partial<PedidoDatosDto>>(`${this.apiUrl}/pedidos`, pedido);
   }
 }
